@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ movie.title }}{% endblock %}
+
+{% block content %}
+    <div class="movie-details">
+        <img src="{{ movie.poster}}" alt="{{ movie.title }} Poster">
+        <h1>{{ movie.title }}</h1>
+        <p>Year: {{ movie.year }}</p>
+        <div class="movie-player">
+            <!-- Aquí iría el iframe del reproductor de la película -->
+            <iframe src="https://example.com/movie-player/{{ movie.imdb_id }}" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <h2>Reviews</h2>
+    {% if current_user.is_authenticated %}
+        <form method="POST" action="{{ url_for('movie', imdb_id=movie.imdb_id) }}">
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.content.label }}
+                {{ form.content }}
+            </div>
+            <div>
+                {{ form.rating.label }}
+                {{ form.rating }}
+            </div>
+            {{ form.submit }}
+        </form>
+    {% endif %}
+
+    <div class="reviews">
+        {% for review in reviews %}
+            <div class="review">
+                <h3>{{ review.author.username }}</h3>
+                <p>Rating: {{ review.rating }}/5</p>
+                <p>{{ review.content }}</p>
+                <p class="timestamp">{{ review.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

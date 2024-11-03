@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Welcome to CineVibes</h1>
+    <section class="featured-movies">
+        <h2>Featured Movies</h2>
+        <div class="movie-grid">
+            {% for movie in movies %}
+                <div class="movie-card">
+                    <a href="{{ url_for('movie', imdb_id=movie.imdb_id) }}">
+                        <img src="{{ movie.poster }}" alt="{{ movie.title }}">
+                        <h3>{{ movie.title }}</h3>
+                        <p>{{ movie.year }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
