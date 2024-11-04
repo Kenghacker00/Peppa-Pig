@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Dejar Reseña</h2>
+<form id="review-form">
+    <label for="movie-id">ID de la Película:</label>
+    <input type="text" id="movie-id" name="movie-id" required>
+
+    <label for="review">Reseña:</label>
+    <textarea id="review" name="review" required></textarea>
+
+    <button type="submit">Enviar Reseña</button>
+</form>
+<div id="message"></div>
+{% endblock %}

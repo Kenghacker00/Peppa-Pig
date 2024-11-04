@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Lista de Películas</h2>
+<div id="movieList">
+    <!-- Aquí se mostrarán las películas -->
+    <div class="movie" id="movie1">
+        <h3>Título de la Película 1</h3>
+        <p>Descripción de la película 1.</p>
+        <a href="/movie/1">Ver Detalles</a>
+    </div>
+    <div class="movie" id="movie2">
+        <h3>Título de la Película 2</h3>
+        <p>Descripción de la película 2.</p>
+        <a href="/movie/2">Ver Detalles</a>
+    </div>
+    <!-- Agrega más películas aquí -->
+</div>
+{% endblock %}

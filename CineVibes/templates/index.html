@@ -1,21 +1,13 @@
-{% extends "layout.html" %}
+{% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Página de Inicio{% endblock %}
 
 {% block content %}
-    <h1>Welcome to CineVibes</h1>
-    <section class="featured-movies">
-        <h2>Featured Movies</h2>
-        <div class="movie-grid">
-            {% for movie in movies %}
-                <div class="movie-card">
-                    <a href="{{ url_for('movie', imdb_id=movie.imdb_id) }}">
-                        <img src="{{ movie.poster }}" alt="{{ movie.title }}">
-                        <h3>{{ movie.title }}</h3>
-                        <p>{{ movie.year }}</p>
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
-    </section>
+<h1>Bienvenido a CineVibes</h1>
+<p>Explora las mejores películas y comparte tus opiniones.</p>
+{% if user %}
+    <p>Hola, {{ user.nickname }}! <a href="/logout">Cerrar sesión</a></p>
+{% else %}
+    <p><a href="/login">Inicia sesión</a> o <a href="/register">regístrate</a> para comenzar.</p>
+{% endif %}
 {% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ movie['title'] }}</h2>
+<p><strong>Descripción:</strong> {{ movie['plot'] }}</p>
+<p><strong>Fecha de lanzamiento:</strong> {{ movie['releaseDate'] }}</p>
+<p><strong>Calificación:</strong> {{ movie['imDbRating'] }}</p>
+<img src="{{ movie['image'] }}" alt="{{ movie['title'] }}" style="width:200px;">
+<a href="/review?movie_id={{ movie['id'] }}">Dejar una reseña</a>
+{% endblock %}
