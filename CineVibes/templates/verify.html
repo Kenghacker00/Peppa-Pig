@@ -1,20 +1,22 @@
-<!-- verify.html -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificación de Código</title>
-</head>
-<body>
-    <h1>Verifica tu Cuenta</h1>
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
-    <form method="POST" action="{{ url_for('verify', email=email) }}">
-        <label for="code">Ingresa el Código de Verificación:</label>
-        <input type="text" id="code" name="code" required>
-        <button type="submit">Verificar</button>
-    </form>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Verificación de Código - CineVibes{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Verifica tu Cuenta</div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('verify', email=email) }}">
+                    <div class="mb-3">
+                        <label for="code" class="form-label">Ingresa el Código de Verificación:</label>
+                        <input type="text" class="form-control" id="code" name="code" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Verificar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

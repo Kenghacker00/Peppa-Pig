@@ -1,11 +1,30 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
+{% block title %}CineVibes - Perfil de {{ user.nickname }}{% endblock %}
 
 {% block content %}
-<h2>Perfil del Usuario</h2>
-<div id="profile-info">
-    <img src="{{ url_for('static', filename='images/default_profile.png') }}" alt="Perfil" id="profile-pic">
-    <p><strong>Nickname:</strong> <span id="nickname"></span></p>
-    <p><strong>Email:</strong> <span id="email"></span></p>
+<h2 class="mb-4">Perfil de {{ user.nickname }}</h2>
+<div class="row">
+    <div class="col-md-4">
+        <img src="{{ user.profile_pic or url_for('static', filename='images/default_profile.png') }}" alt="Foto de perfil" class="img-fluid rounded-circle mb-3">
+        <h3>{{ user.nickname }}</h3>
+        <p>Email: {{ user.email }}</p>
+    </div>
+    <div class="col-md-8">
+        <h3>Reseñas</h3>
+        {% if reviews %}
+            <ul class="list-group">
+                {% for review in reviews %}
+                    <li class="list-group-item">
+                        <h5>{{ review.movie_title }}</h5>
+                        <p>{{ review.review_text }}</p>
+                        <small>Calificación: {{ review.rating }}/10</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aún no has escrito reseñas.</p>
+        {% endif %}
+    </div>
 </div>
-<button onclick="location.href='/movies'">Ver Películas</button>
 {% endblock %}

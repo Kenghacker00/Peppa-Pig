@@ -1,37 +1,145 @@
+/* Estilos generales */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-nav {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
+main {
+    flex: 1;
 }
 
-nav a {
-    color: #fff;
-    margin: 0 15px;
-    text-decoration: none;
+/* Navbar personalizado */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
 }
 
-.container {
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* Cards */
+.card {
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0,0,0,.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Botones */
+.btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+/* Imágenes de películas */
+.card-img-top {
+    height: 300px;
+    object-fit: cover;
+}
+
+/* Sistema de calificación */
+.rating {
+    color: #ffd700;
+    font-size: 1.2rem;
+}
+
+/* Formularios */
+.form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52,152,219,.25);
+}
+
+/* Footer */
+.footer {
+    background-color: #343a40;
+    color: white;
+    padding: 1rem 0;
+    margin-top: auto;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card-img-top {
+        height: 200px;
+    }
+}
+
+.featured-movie {
+    margin-bottom: 2em;
+}
+
+/* Estilos existentes... */
+
+.movie-card {
+    display: flex;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.movie-poster {
+    width: 200px;
+    object-fit: cover;
+}
+
+.movie-info {
     padding: 20px;
+    flex: 1;
 }
 
-h2 {
-    color: #333;
+.btn-watch, .btn-details {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
-.movie {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px 0;
-    background-color: #fff;
+.btn-watch:hover, .btn-details:hover {
+    background-color: #0056b3;
 }
 
-.movie img {
-    max-width: 100%;
+.movie-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.movie-item {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.movie-thumbnail {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
 }

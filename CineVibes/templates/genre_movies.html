@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}CineVibes - Recomendaciones{% endblock %}
+{% block title %}CineVibes - Películas de {{ genre }}{% endblock %}
 
 {% block content %}
-<h2>Recomendaciones para Ti ```html
-</h2>
+<h2>Películas de {{ genre }}</h2>
 <div class="row">
     {% for movie in movies %}
         <div class="col-md-4 mb-4">
@@ -20,6 +19,6 @@
     {% endfor %}
 </div>
 {% if not movies %}
-    <p>No hay recomendaciones disponibles.</p>
+    <p>No hay películas disponibles en esta categoría.</p>
 {% endif %}
 {% endblock %}

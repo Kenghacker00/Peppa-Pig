@@ -1,19 +1,61 @@
 {% extends 'base.html' %}
 
+{% block title %}Películas - CineVibes{% endblock %}
+
 {% block content %}
-<h2>Lista de Películas</h2>
-<div id="movieList">
-    <!-- Aquí se mostrarán las películas -->
-    <div class="movie" id="movie1">
-        <h3>Título de la Película 1</h3>
-        <p>Descripción de la película 1.</p>
-        <a href="/movie/1">Ver Detalles</a>
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Películas</h2>
+        </div>
+        <div class="col-auto">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Buscar películas..." id="searchInput">
+                <button class="btn btn-primary" type="button" id="searchButton">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
+            </div>
+        </div>
     </div>
-    <div class="movie" id="movie2">
-        <h3>Título de la Película 2</h3>
-        <p>Descripción de la película 2.</p>
-        <a href="/movie/2">Ver Detalles</a>
+
+    <div class="row row-cols-1 row-cols-md-4 g-4" id="movieGrid">
+        {% for movie in movies %}
+        <div class="col">
+            <div class="card h-100">
+                <img src="{{ movie.poster }}" class="card-img-top" alt="{{ movie.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text">{{ movie.year }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="{{ url_for('movie_detail', movie_id=movie.id) }}"
+                               class="btn btn-sm btn-outline-primary">Ver Detalles</a>
+                            <button type="button"
+                                    class="btn btn-sm btn-outline-secondary favorite-btn"
+                                    data-movie-id="{{ movie.id }}">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                        <small class="text-muted">IMDb: {{ movie.rating }}/10</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    <!-- Agrega más películas aquí -->
+
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            <li class="page-item {% if not has_prev %}disabled{% endif %}">
+                <a class="page-link" href="{{ url_for('movies', page=page-1) if has_prev }}">Anterior</a>
+            </li>
+            <li class="page-item active">
+                <span class="page-link">{{ page }}</span>
+            </li>
+            <li class="page-item {% if not has_next %}disabled{% endif %}">
+                <a class="page-link" href="{{ url_for('movies', page=page+1) if has_next }}">Siguiente</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 {% endblock %}

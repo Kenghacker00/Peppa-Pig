@@ -1,10 +1,31 @@
 {% extends 'base.html' %}
 
+{% block title %}{{ movie.title }} - CineVibes{% endblock %}
+
 {% block content %}
-<h2>{{ movie['title'] }}</h2>
-<p><strong>Descripción:</strong> {{ movie['plot'] }}</p>
-<p><strong>Fecha de lanzamiento:</strong> {{ movie['releaseDate'] }}</p>
-<p><strong>Calificación:</strong> {{ movie['imDbRating'] }}</p>
-<img src="{{ movie['image'] }}" alt="{{ movie['title'] }}" style="width:200px;">
-<a href="/review?movie_id={{ movie['id'] }}">Dejar una reseña</a>
+<div class="movie-detail">
+    <h1>{{ movie.title }}</h1>
+    <img src="{{ movie.poster }}" alt="{{ movie.title }} Poster">
+    <p><strong>Año:</strong> {{ movie.year }}</p>
+    <p><strong>Director:</strong> {{ movie.director }}</p>
+    <p><strong>Actores:</strong> {{ movie.actors }}</p>
+    <p><strong>Género:</strong> {{ movie.genre }}</p>
+    <p><strong>Trama:</strong> {{ movie.plot }}</p>
+
+    <div class="movie-player">
+        <h2>Ver Película</h2>
+        <!-- Aquí va el iframe para reproducir la película -->
+        <iframe src="https://filemoon.sx/e/hsptb7brzqry/{{ movie.imdb_id }}"
+                width="640"
+                height="360"
+                frameborder="0"
+                allowfullscreen>
+        </iframe>
+    </div>
+
+    <h2>Reseñas</h2>
+    <!-- Aquí puedes agregar la sección de reseñas si la tienes -->
+
+    <a href="{{ url_for('review', movie_id=movie.id) }}">Escribir una reseña</a>
+</div>
 {% endblock %}
