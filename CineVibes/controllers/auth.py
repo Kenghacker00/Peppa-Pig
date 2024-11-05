@@ -9,16 +9,8 @@ class AuthController:
         self.verification_codes = {}  # Almacena códigos de verificación
 
     def register(self, nickname, email, password):
-        # Generar un código de verificación
-        verification_code = random.randint(100000, 999999)
-        self.verification_codes[email] = verification_code
-
-        # Enviar el código de verificación al correo electrónico
-        send_verification_email(email, verification_code)
-
-        # Guardar el usuario en la base de datos (puedes hacerlo aquí o en el método de verificación)
-        # Aquí solo se envía el código de verificación
-        return {'success': True, 'message': 'Código de verificación enviado a tu correo.'}
+        hashed_password = generate_password_hash(password)
+        self.user_model.create_user(nickname, email, hashed_password)
 
     def verify_code(self, email, code):
         if email in self.verification_codes and self.verification_codes[email] == code:
@@ -35,7 +27,7 @@ class AuthController:
         return {'success': False, 'message': 'Código de verificación incorrecto.'}
 
     def login(self, email, password):
-        user = self.user_model.get_user_by_email(email)
-        if user and check_password_hash(user.password, password):  # Asegúrate de que el modelo de usuario tenga el atributo 'password'
-            return {'success': True, 'user_id': user.id}  # Devuelve el ID del usuario
-        return {'success': False, 'message': 'Credenciales incorrectas.'}
+        user = self.get_user_by_email(email)
+        if user and check_password_hash(user['password'], password):
+            return {'success': True, 'user_id': user['id']}
+        return {'success': False, 'message': 'Correo o contraseña incorrectos.'}

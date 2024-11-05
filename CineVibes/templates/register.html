@@ -8,7 +8,8 @@
         <div class="card">
             <div class="card-header">Registro de Usuario</div>
             <div class="card-body">
-                <form method="POST" action="{{ url_for('register') }}">
+                <div id="message"></div>
+                <form id="register-form" method="POST">
                     <div class="mb-3">
                         <label for="nickname" class="form-label">Apodo:</label>
                         <input type="text" class="form-control" id="nickname" name="nickname" required>

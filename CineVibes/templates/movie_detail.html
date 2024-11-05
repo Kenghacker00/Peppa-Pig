@@ -1,31 +1,31 @@
-{% extends 'base.html' %}
-
-{% block title %}{{ movie.title }} - CineVibes{% endblock %}
+{% extends "base.html" %}
 
 {% block content %}
-<div class="movie-detail">
-    <h1>{{ movie.title }}</h1>
-    <img src="{{ movie.poster }}" alt="{{ movie.title }} Poster">
-    <p><strong>Año:</strong> {{ movie.year }}</p>
-    <p><strong>Director:</strong> {{ movie.director }}</p>
-    <p><strong>Actores:</strong> {{ movie.actors }}</p>
-    <p><strong>Género:</strong> {{ movie.genre }}</p>
-    <p><strong>Trama:</strong> {{ movie.plot }}</p>
+<h1>{{ movie.title }}</h1>
+<!-- ... otros detalles de la película ... -->
 
-    <div class="movie-player">
-        <h2>Ver Película</h2>
-        <!-- Aquí va el iframe para reproducir la película -->
-        <iframe src="https://filemoon.sx/e/hsptb7brzqry/{{ movie.imdb_id }}"
-                width="640"
-                height="360"
-                frameborder="0"
-                allowfullscreen>
-        </iframe>
-    </div>
+<h2>Reseñas</h2>
+{% if session.user_id %}
+<form action="{{ url_for('add_review', movie_id=movie.imdb_id) }}" method="POST">
+    <textarea name="content" required></textarea>
+    <select name="rating" required>
+        <option value="1">1 estrella</option>
+        <option value="2">2 estrellas</option>
+        <option value="3">3 estrellas</option>
+        <option value="4">4 estrellas</option>
+        <option value="5">5 estrellas</option>
+    </select>
+    <button type="submit">Enviar reseña</button>
+</form>
+{% else %}
+<p><a href="{{ url_for('login') }}">Inicia sesión para dejar una reseña</a></p>
+{% endif %}
 
-    <h2>Reseñas</h2>
-    <!-- Aquí puedes agregar la sección de reseñas si la tienes -->
-
-    <a href="{{ url_for('review', movie_id=movie.id) }}">Escribir una reseña</a>
+{% for review in reviews %}
+<div class="review">
+    <p>{{ review.content }}</p>
+    <p>Calificación: {{ review.rating }}/5</p>
+    <p>Por: {{ review.user_nickname }}</p>
 </div>
+{% endfor %}
 {% endblock %}

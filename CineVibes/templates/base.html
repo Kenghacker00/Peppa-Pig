@@ -1,4 +1,3 @@
-<!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,9 +18,8 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url_for('search') }}">Buscar</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('request_movie') }}">Solicitar Película</a></li>
                 {% if 'user_id' in session %}
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('favorites') }}">Favoritos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('recommend') }}">Recomendaciones</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('profile') }}">Perfil</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Cerrar Sesión</a></li>
                 {% else %}

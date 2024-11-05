@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash, g
 import sqlite3
+from werkzeug.security import generate_password_hash, check_password_hash  # Añade esta línea
+import sqlite3
 from controllers.auth import AuthController
 from controllers.movie import MovieController
 from controllers.review import ReviewController
@@ -47,19 +49,44 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        nickname = request.form.get('nickname')
-        email = request.form.get('email')
-        password = request.form.get('password')
+        # Obtener datos del formulario o JSON
+        data = request.get_json() if request.is_json else request.form
+        nickname = data.get('nickname')
+        email = data.get('email')
+        password = data.get('password')
 
-        verification_code = ''.join(random.choices('0123456789', k=6))
-        result = auth_controller.register(nickname, email, password, verification_code)
+        db = get_db()
+        error = None
 
-        if result.get('success'):
+        if not nickname:
+            error = 'Se requiere un nickname.'
+        elif not email:
+            error = 'Se requiere un email.'
+        elif not password:
+            error = 'Se requiere una contraseña.'
+        elif db.execute('SELECT id FROM users WHERE email = ?', (email,)).fetchone():
+            error = f'El email {email} ya está registrado.'
+
+        if error is None:
+            verification_code = ''.join(random.choices('0123456789', k=6))
+            db.execute(
+                'INSERT INTO users (nickname, email, password, verification_code) VALUES (?, ?, ?, ?)',
+                (nickname, email, generate_password_hash(password), verification_code)
+            )
+            db.commit()
             send_verification_email(email, verification_code)
-            flash('Se ha enviado un código de verificación a tu correo.', 'info')
+
+            if request.is_json:
+                return jsonify({
+                    'success': True,
+                    'message': 'Registro exitoso. Se ha enviado un código de verificación a tu email.'
+                })
+            flash('Registro exitoso. Se ha enviado un código de verificación a tu email.', 'success')
             return redirect(url_for('verify', email=email))
-        else:
-            flash(result.get('message'), 'error')
+
+        if request.is_json:
+            return jsonify({'success': False, 'message': error})
+        flash(error, 'error')
 
     return render_template('register.html')
 
@@ -80,17 +107,36 @@ def verify(email):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
+        # Obtener datos del formulario o JSON
+        data = request.get_json() if request.is_json else request.form
+        email = data.get('email')
+        password = data.get('password')
 
-        result = auth_controller.login(email, password)
+        db = get_db()
+        error = None
+        user = db.execute('SELECT * FROM users WHERE email = ?', (email,)).fetchone()
 
-        if result.get('success'):
-            session['user_id'] = result['user_id']
-            flash('Has iniciado sesión exitosamente.', 'success')
+        if user is None:
+            error = 'Email incorrecto.'
+        elif not check_password_hash(user['password'], password):
+            error = 'Contraseña incorrecta.'
+        elif not user['is_verified']:
+            error = 'Por favor verifica tu email antes de iniciar sesión.'
+
+        if error is None:
+            session.clear()
+            session['user_id'] = user['id']
+
+            if request.is_json:
+                return jsonify({
+                    'success': True,
+                    'message': 'Inicio de sesión exitoso'
+                })
             return redirect(url_for('index'))
-        else:
-            flash(result.get('message'), 'error')
+
+        if request.is_json:
+            return jsonify({'success': False, 'message': error})
+        flash(error, 'error')
 
     return render_template('login.html')
 
@@ -117,6 +163,7 @@ def movie_detail(movie_id):
     else:
         flash('Película no encontrada', 'error')
         return redirect(url_for('index'))
+
 @app.route('/movie/player/<string:movie_id>')
 def movie_player(movie_id):
     # Diccionario con la información de las películas
@@ -125,17 +172,16 @@ def movie_player(movie_id):
             'title': 'Deadpool',
             'year': '2016',
             'director': 'Tim Miller',
-            'video_url': 'URL_DE_DEADPOOL',
-            'poster': 'https://m.media-amazon.com/images/M/MV5BYzE5MjY1ZDgtMTkyNC00MTMyLThhMjAtZGI5OTE1NzFlZGJjXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg'
+            'plot': 'Un mercenario con una lengua afilada y un sentido del humor mórbido es sometido a un experimento clandestino que le deja con poderes de curación acelerados y una misión de venganza.',
+            'imdb_id': 'tt1431045'
         },
         'tt1537481': {
-            'title': 'Deadpool and Wolverine',
+            'title': 'Deadpool And Wolverine',
             'year': '2024',
             'director': 'Shawn Levy',
-            'video_url': 'URL_DE_DEADPOOL_AND_WOLVERINE',
-            'poster': 'URL_DEL_POSTER_DE_DEADPOOL_AND_WOLVERINE'
+            'plot': 'La nueva entrega de la saga donde Wade Wilson, conocido por todos como Deadpool, intenta llevar una vida normal lejos de su pasado como mercenario. Pero cuando su mundo se encuentra al borde de una catástrofe, se ve obligado a regresar a la acción.',
+            'imdb_id': 'tt1537481'
         }
-        # Puedes añadir más películas aquí
     }
 
     movie = movies.get(movie_id)
@@ -144,16 +190,40 @@ def movie_player(movie_id):
 
     return render_template('movie_player.html', movie=movie)
 
-@app.route('/search')
+@app.route('/search', methods=['GET'])
 def search():
-    query = request.args.get('q', '')
+    query = request.args.get('query', '')
     if query:
-        results = movie_controller.search_movies(query)
-        if 'errorMessage' in results:
-            flash(results['errorMessage'], 'error')
-            return render_template('search.html', error=results['errorMessage'])
-        return render_template('search_results.html', movies=results.get('results', []))
+        movies = movie_controller.search_movies(query)
+        return render_template('search_results.html', movies=movies, query=query)
     return render_template('search.html')
+
+@app.route('/movie/<string:movie_id>/review', methods=['POST'])
+def add_review(movie_id):
+    if 'user_id' not in session:
+        flash('Debes iniciar sesión para dejar una reseña.', 'error')
+        return redirect(url_for('login'))
+
+    content = request.form['content']
+    rating = request.form['rating']
+
+    review_controller.add_review(session['user_id'], movie_id, content, rating)
+    flash('Tu reseña ha sido añadida.', 'success')
+    return redirect(url_for('movie_detail', movie_id=movie_id))
+
+from utils.email import send_movie_request_email
+
+@app.route('/request-movie', methods=['GET', 'POST'])
+def request_movie():
+    if request.method == 'POST':
+        movie_title = request.form['movie_title']
+        user_email = request.form['user_email']
+
+        send_movie_request_email('vibescine10@gmail.com', movie_title, user_email)
+        flash('Tu solicitud de película ha sido enviada.', 'success')
+        return redirect(url_for('index'))
+
+    return render_template('request_movie.html')
 
 @app.route('/favorites', methods=['GET', 'POST'])
 def favorites():
@@ -194,16 +264,17 @@ if __name__ == '__main__':
     with sqlite3.connect(db_path) as conn:
         # Crear tabla de usuarios
         conn.execute('''
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                nickname TEXT NOT NULL,
-                email TEXT NOT NULL UNIQUE,
-                password TEXT NOT NULL,
-                is_verified BOOLEAN DEFAULT 0,
-                verification_code TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nickname TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            is_verified BOOLEAN DEFAULT 0,
+            verification_code TEXT,
+            profile_pic TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
 
         # Crear tabla de películas
         conn.execute('''

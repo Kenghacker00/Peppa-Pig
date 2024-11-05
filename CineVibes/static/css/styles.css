@@ -10,85 +10,10 @@ main {
     flex: 1;
 }
 
-/* Navbar personalizado */
-.navbar {
-    box-shadow: 0 2px 4px rgba(0,0,0,.1);
-}
-
-.navbar-brand {
-    font-weight: bold;
-    font-size: 1.5rem;
-}
-
-/* Cards */
-.card {
-    transition: transform 0.2s ease-in-out;
-    box-shadow: 0 4px 6px rgba(0,0,0,.1);
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-/* Botones */
-.btn-primary {
-    background-color: #3498db;
-    border-color: #3498db;
-}
-
-.btn-primary:hover {
-    background-color: #2980b9;
-    border-color: #2980b9;
-}
-
-/* Imágenes de películas */
-.card-img-top {
-    height: 300px;
-    object-fit: cover;
-}
-
-/* Sistema de calificación */
-.rating {
-    color: #ffd700;
-    font-size: 1.2rem;
-}
-
-/* Formularios */
-.form-control:focus {
-    border-color: #3498db;
-    box-shadow: 0 0 0 0.2rem rgba(52,152,219,.25);
-}
-
-/* Footer */
-.footer {
-    background-color: #343a40;
-    color: white;
-    padding: 1rem 0;
-    margin-top: auto;
-}
-
-/* Animaciones */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.fade-in {
-    animation: fadeIn 0.5s ease-in;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .card-img-top {
-        height: 200px;
-    }
-}
-
+/* Estilos para las películas destacadas */
 .featured-movie {
     margin-bottom: 2em;
 }
-
-/* Estilos existentes... */
 
 .movie-card {
     display: flex;
@@ -97,16 +22,32 @@ main {
     overflow: hidden;
     margin-bottom: 20px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
 }
 
 .movie-poster {
     width: 200px;
+    height: 300px;
     object-fit: cover;
 }
 
 .movie-info {
     padding: 20px;
     flex: 1;
+}
+
+.movie-info h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.movie-info p {
+    margin-bottom: 10px;
+    color: #666;
 }
 
 .btn-watch, .btn-details {
@@ -116,16 +57,19 @@ main {
     color: white;
     text-decoration: none;
     border-radius: 5px;
-    margin-top: 10px;
+    transition: background-color 0.3s ease;
 }
 
 .btn-watch:hover, .btn-details:hover {
     background-color: #0056b3;
+    color: white;
+    text-decoration: none;
 }
 
+/* Estilos para la lista de películas */
 .movie-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
     padding: 20px 0;
 }
@@ -133,13 +77,36 @@ main {
 .movie-item {
     background: #fff;
     border-radius: 10px;
-    overflow: hidden;
+    padding: 20px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    text-align: center;
+    transition: transform 0.3s ease;
 }
 
-.movie-thumbnail {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
+.movie-item:hover {
+    transform: translateY(-5px);
+}
+
+.movie-item h3 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .movie-card {
+        flex-direction: column;
+    }
+
+    .movie-poster {
+        width: 100%;
+        height: 400px;
+    }
+
+    .movie-info {
+        padding: 15px;
+    }
+
+    .movie-list {
+        grid-template-columns: 1fr;
+    }
 }
