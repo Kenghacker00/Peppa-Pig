@@ -2,17 +2,17 @@ import requests
 from config import Config
 
 def search_movies(query):
-    url = f"https://imdb-api.com/en/API/SearchMovie/{Config.IMDB_API_KEY}/{query}"
+    url = f"http://www.omdbapi.com/?apikey={Config.OMDB_API_KEY}&s={query}"
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()  # Esto lanzará una excepción para códigos de estado HTTP no exitosos
         return response.json()
     except requests.exceptions.RequestException as e:
-        print(f"Error al conectar con la API de IMDb: {e}")
-        return {"errorMessage": "No se pudo conectar con la API de IMDb"}
+        print(f"Error al conectar con la API de OMDb: {e}")
+        return {"errorMessage": "No se pudo conectar con la API de OMDb"}
 
 def get_movie_details(movie_id):
-    url = f"https://imdb-api.com/en/API/Title/{Config.IMDB_API_KEY}/{movie_id}"
+    url = f"http://www.omdbapi.com/?apikey={Config.OMDB_API_KEY}&i={movie_id}"
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()

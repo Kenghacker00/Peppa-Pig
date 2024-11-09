@@ -182,15 +182,6 @@ def logout():
     flash('Has cerrado sesión.', 'info')
     return redirect(url_for('index'))
 
-@app.route('/movie/<int:movie_id>', methods=['GET', 'POST'])
-def movie_detail(movie_id):
-    movie = movie_controller.get_movie_details(movie_id)
-    if movie:
-        return render_template('movie_detail.html', movie=movie)
-    else:
-        flash('Película no encontrada', 'error')
-        return redirect(url_for('index'))
-
 @app.route('/movie/player/<string:movie_id>')
 def movie_player(movie_id):
     # Diccionario con la información de las películas
@@ -226,11 +217,32 @@ def movie_player(movie_id):
 
 @app.route('/search', methods=['GET'])
 def search():
-    query = request.args.get('query', '')
+    query = request.args.get('q', '')
     if query:
         movies = movie_controller.search_movies(query)
         return render_template('search_results.html', movies=movies, query=query)
     return render_template('search.html')
+
+@app.route('/movie/<string:movie_id>', methods=['GET', 'POST'])
+def movie_detail(movie_id):
+    movie = movie_controller.get_movie_details(movie_id)
+    if movie:
+        return render_template('movie_detail.html', movie=movie)
+    else:
+        flash('Película no encontrada', 'error')
+        return redirect(url_for('index'))
+
+def search_movies(query):
+    url = f"http://www.omdbapi.com/?apikey={Config.OMDB_API_KEY}&s={query}"
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+        print(data)  # Imprimir la respuesta para depuración
+        return data
+    except requests.exceptions.RequestException as e:
+        print(f"Error al conectar con la API de OMDb: {e}")
+        return {"errorMessage": "No se pudo conectar con la API de OMDb"}
 
 @app.route('/movie/<string:movie_id>/review', methods=['POST'])
 def add_review(movie_id):

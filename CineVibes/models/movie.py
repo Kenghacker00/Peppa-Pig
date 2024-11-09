@@ -11,4 +11,13 @@ class Movie:
         conn.close()
         return movie
 
+    def add_movie(self, imdb_id, title, year, poster):
+        conn = sqlite3.connect(self.db_path)
+        conn.execute('''
+            INSERT OR IGNORE INTO movies (imdb_id, title, year, poster)
+            VALUES (?, ?, ?, ?)
+        ''', (imdb_id, title, year, poster))
+        conn.commit()
+        conn.close()
+
     # Aquí puedes agregar más métodos relacionados con las películas

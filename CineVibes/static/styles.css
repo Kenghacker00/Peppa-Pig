@@ -151,118 +151,28 @@ footer {
     width: 100%;
 }
 
+/* styles.css */
 .card {
     border: none;
-    border-radius: 15px;
-    transition: transform 0.3s ease;
+    border-radius: 10px;
+    transition: transform 0.3s;
 }
 
 .card:hover {
-    transform: translateY(-5px);
+    transform: scale(1.05);
 }
 
-.card-header {
-    border-radius: 15px 15px 0 0 !important;
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.form-control {
-    border-radius: 10px;
-    border: 2px solid #e9ecef;
-    padding: 0.75rem 1rem;
-    transition: border-color 0.3s ease;
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
 }
 
-.form-control:focus {
-    border-color: #007bff;
-    box-shadow: none;
+.card-text {
+    color: #666;
 }
-
-.btn-primary {
-    border-radius: 10px;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,123,255,0.3);
-}
-
-.invalid-feedback {
-    font-size: 0.875rem;
-}
-
-.form-text {
-    font-size: 0.875rem;
-}
-
-    .hero-section {
-        padding: 4rem 2rem;
-        margin-bottom: 3rem;
-        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-                    url('/static/images/cinema-background.jpg') center/cover;
-        border-radius: 15px;
-    }
-
-    .section-title {
-        margin-bottom: 2rem;
-        color: var(--light-text);
-        font-weight: 600;
-        border-left: 4px solid var(--accent-color);
-        padding-left: 1rem;
-    }
-
-    .movie-card {
-        height: 100%;
-        transition: transform 0.3s ease;
-        border-radius: 15px;
-        overflow: hidden;
-    }
-
-    .movie-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .movie-poster {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .movie-title {
-        color: var(--light-text);
-        margin-bottom: 1rem;
-    }
-
-    .movie-meta {
-        color: var(--light-text);
-        opacity: 0.8;
-        margin-bottom: 1rem;
-    }
-
-    .movie-meta span {
-        margin-right: 1.5rem;
-    }
-
-    .movie-meta i {
-        margin-right: 0.5rem;
-    }
-
-    .movie-description {
-        color: var(--light-text);
-        opacity: 0.9;
-        margin-bottom: 1.5rem;
-    }
-
-    .btn-watch {
-        padding: 0.5rem 1.5rem;
-        border -radius: 25px;
-        transition: all 0.3s ease;
-    }
-
-    .btn-watch:hover {
-        transform: scale(1.05);
-        background-color: var(--accent-color);
-        color: #fff;
-    }

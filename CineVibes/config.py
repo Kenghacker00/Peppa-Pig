@@ -5,4 +5,4 @@ class Config:
     DATABASE = 'database/cinevibes.db'
     EMAIL_SENDER = 'vibescine10@gmail.com'
     EMAIL_PASSWORD = 'adoi iehs jvmm itme'
-    IMDB_API_KEY = 'http://www.omdbapi.com/?i=tt3896198&apikey=3e192711'
+    OMDB_API_KEY = '15fb7f01'
