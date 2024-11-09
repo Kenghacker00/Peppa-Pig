@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}CineVibes - Inicio{% endblock %}
+
+{% block content %}
+<div class="container-fluid animate__animated animate__fadeIn">
+    <!-- Hero Section -->
+    <div class="hero-section glass-effect text-center mb-5">
+        <h1 class="display-4 mb-4">Bienvenido a CineVibes</h1>
+        <p class="lead">Tu destino para el mejor entretenimiento cinematográfico</p>
+    </div>
+
+    <!-- Featured Movies Section -->
+    <section class="featured-movies mb-5">
+        <h2 class="section-title"><i class="fas fa-star"></i> Películas Destacadas</h2>
+        <div class="row">
+            <!-- Deadpool -->
+            <div class="col-md-6 mb-4">
+                <div class="movie-card glass-effect animate__animated animate__fadeInLeft">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="https://m.media-amazon.com/images/M/MV5BYzE5MjY1ZDgtMTkyNC00MTMyLThhMjAtZGI5OTE1NzFlZGJjXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
+                                 alt="Deadpool Poster"
+                                 class="movie-poster">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="movie-info p-4">
+                                <h3 class="movie-title">Deadpool</h3>
+                                <div class="movie-meta">
+                                    <span><i class="fas fa-calendar"></i> 2016</span>
+                                    <span><i class="fas fa-film"></i> Tim Miller</span>
+                                </div>
+                                <p class="movie-description">
+                                    Un mercenario con una lengua afilada y un sentido del humor mórbido es sometido a un experimento clandestino que le deja con poderes de curación acelerados y una misión de venganza.
+                                </p>
+                                <a href="{{ url_for('movie_player', movie_id='tt1431045') }}"
+                                   class="btn btn-primary btn-watch">
+                                    <i class="fas fa-play"></i> Ver Película
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deadpool And Wolverine -->
+            <div class="col-md-6 mb-4">
+                <div class="movie-card glass-effect animate__animated animate__fadeInRight">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="https://cdn.marvel.com/content/1x/dp3_1sht_digital_srgb_ka_swords_v5_resized.jpg"
+                                 alt="Deadpool And Wolverine Poster"
+                                 class="movie-poster">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="movie-info p-4">
+                                <h3 class="movie-title">Deadpool And Wolverine</h3>
+                                <div class="movie-meta">
+                                    <span><i class="fas fa-calendar"></i> 2024</span>
+                                    <span><i class="fas fa-film"></i> Shawn Levy</span>
+                                </div>
+                                <p class="movie-description">
+                                    La nueva entrega de la saga donde Wade Wilson intenta llevar una vida normal lejos de su pasado como mercenario. Pero cuando su mundo se encuentra al borde de una catástrofe, se ve obligado a regresar a la acción.
+                                </p>
+                                <a href="{{ url_for('movie_player', movie_id='tt1537481') }}"
+                                   class="btn btn-primary btn-watch">
+                                    <i class="fas fa-play"></i> Ver Película
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spider-Man: No Way Home -->
+            <div class="col-md-6 mb-4">
+                <div class="movie-card glass-effect animate__animated animate__fadeInRight">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="https://m.media-amazon.com/images/M/MV5BMmFiZGZjMmEtMTA0Ni00MzA2LTljMTYtZGI2MGJmZWYzZTQ2XkEyXkFqcGc@._V1_.jpg"
+                                 alt="Spider-Man: No Way Home Poster"
+                                 class="movie-poster">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="movie-info p-4">
+                                <h3 class="movie-title">Spider-Man: No Way Home</h3>
+                                <div class="movie-meta">
+                                    <span><i class="fas fa-calendar"></i> 2021</span>
+                                    <span><i class="fas fa-film"></i> Jon Watts</span>
+                                </div>
+                                <p class="movie-description">
+                                    Peter Parker es desenmascarado y por tanto no es capaz de separar su vida normal de los enormes riesgos que conlleva ser un súper héroe. Cuando pide ayuda a Doctor Strange, los riesgos pasan a ser aún más peligrosos, obligándole a descubrir lo que realmente significa ser Spider-Man.
+                                </p>
+                                <a href="{{ url_for('movie_player', movie_id='tt10872600') }}"
+                                   class="btn btn-primary btn-watch">
+                                    <i class="fas fa-play"></i> Ver Película
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Recent Movies Section -->
+    <section class="recent-movies">
+        <h2 class="section-title"><i class="fas fa-clock"></i> Películas Recientes</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col animate__animated animate__fadeInUp">
+                <div class="movie-item glass-effect">
+                    <div class="movie-item-content p-4">
+                        <h3 class="movie-title">Deadpool And Wolverine</h3>
+                        <div class="movie-meta mb-3">
+                            <span><i class="fas fa-calendar"></i> 2024</span>
+                            <span><i class="fas fa-film"></i> Shawn Levy</span>
+                        </div>
+                        <p class="movie-description">
+                            La nueva entrega de la saga donde Wade Wilson intenta llevar una vida normal lejos de su pasado como mercenario. Pero cuando su mundo se encuentra al borde de una catástrofe, se ve obligado a regresar a la acción.
+                        </p>
+                        <a href="{{ url_for('movie_player', movie_id='tt1537481') }}"
+                           class="btn btn-primary btn-watch">
+                            <i class="fas fa-play"></i> Ver Película
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- añadir mas peliculas -->
+        </div>
+    </section>
+</div>
+{% endblock %}

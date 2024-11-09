@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}{{ movie.title }} ({{ movie.year }}) - CineVibes{% endblock %}
+
+{% block content %}
+<div class="container-fluid animate__animated animate__fadeIn">
+    <div class="row">
+        <div class="col-12 col-lg-8 mb-4">
+            <div class="movie-player glass-effect">
+                <h2 class="movie-title mb-3">{{ movie.title }} ({{ movie.year }})</h2>
+                {% if movie.imdb_id == 'tt1431045' %}
+                <!-- Reproductor para Deadpool (2016) -->
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item"
+                        src="https://luluvdo.com/e/2f87p50mtkny"
+                        allowfullscreen
+                        sandbox="allow-scripts allow-same-origin allow-forms"
+                        referrerpolicy="no-referrer">
+                    </iframe>
+                </div>
+                {% elif movie.imdb_id == 'tt1537481' %}
+                <!-- Reproductor para Deadpool and Wolverine (2024) -->
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item"
+                        src="https://luluvdo.com/e/rmnybmum5g8z"
+                        allowfullscreen
+                        sandbox="allow-scripts allow-same-origin allow-forms"
+                        referrerpolicy="no-referrer">
+                    </iframe>
+                </div>
+                {% elif movie.imdb_id == 'tt10872600' %}
+                <!-- Reproductor para Spider-Man: No Way Home (2021) -->
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item"
+                        src="https://embedwish.com/e/9n1o8erntib4"
+                        allowfullscreen
+                        sandbox="allow-scripts allow-same-origin allow-forms"
+                        referrerpolicy="no-referrer">
+                    </iframe>
+                </div>
+                {% else %}
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i> Lo sentimos, el video no está disponible en este momento.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="movie-info glass-effect p-4 mb-4">
+                <h3 class="mb-3">Detalles de la Película</h3>
+                <p><i class="fas fa-film"></i> <strong>Director:</strong> {{ movie.director }}</p>
+                <p><i class="fas fa-calendar-alt"></i> <strong>Año:</strong> {{ movie.year }}</p>
+                <p><i class="fas fa-star"></i> <strong>Calificación:</strong> {{ movie.rating|default('N/A') }}</p>
+                <p><i class="fas fa-clock"></i> <strong>Duración:</strong> {{ movie.runtime|default('N/A') }}</p>
+                <h4 class="mt-4 mb-2">Sinopsis</h4>
+                <p>{{ movie.plot }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-blocker-notice alert alert-info mt-4">
+        <i class="fas fa-shield-alt"></i> Para una mejor experiencia, recomendamos usar un bloqueador de anuncios en tu navegador.
+    </div>
+</div>
+{% endblock %}

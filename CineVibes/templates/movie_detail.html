@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ movie.title }}</h1>
+<!-- ... otros detalles de la película ... -->
+
+<h2>Reseñas</h2>
+{% if session.user_id %}
+<form action="{{ url_for('add_review', movie_id=movie.imdb_id) }}" method="POST">
+    <textarea name="content" required></textarea>
+    <select name="rating" required>
+        <option value="1">1 estrella</option>
+        <option value="2">2 estrellas</option>
+        <option value="3">3 estrellas</option>
+        <option value="4">4 estrellas</option>
+        <option value="5">5 estrellas</option>
+    </select>
+    <button type="submit">Enviar reseña</button>
+</form>
+{% else %}
+<p><a href="{{ url_for('login') }}">Inicia sesión para dejar una reseña</a></p>
+{% endif %}
+
+{% for review in reviews %}
+<div class="review">
+    <p>{{ review.content }}</p>
+    <p>Calificación: {{ review.rating }}/5</p>
+    <p>Por: {{ review.user_nickname }}</p>
+</div>
+{% endfor %}
+{% endblock %}

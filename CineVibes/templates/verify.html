@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Verificar cuenta</h2>
+<form method="POST">
+    <input type="text" name="code" placeholder="Ingrese el código de verificación" required>
+    <button type="submit">Verificar</button>
+</form>
+{% endblock %}
