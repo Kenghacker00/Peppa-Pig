@@ -18,7 +18,7 @@
                         referrerpolicy="no-referrer">
                     </iframe>
                 </div>
-                {% elif movie.imdb_id == 'tt1537481' %}
+                {% elif movie.imdb_id == 'tt6263850' %}
                 <!-- Reproductor para Deadpool and Wolverine (2024) -->
                 <div class="embed-responsive embed-responsive-16by9">
                     <iframe class="embed-responsive-item"
@@ -50,7 +50,7 @@
                 <h3 class="mb-3">Detalles de la Película</h3>
                 <p><i class="fas fa-film"></i> <strong>Director:</strong> {{ movie.director }}</p>
                 <p><i class="fas fa-calendar-alt"></i> <strong>Año:</strong> {{ movie.year }}</p>
-                <p><i class="fas fa-star"></i> <strong>Calificación:</strong> {{ movie.rating|default('N/A') }}</p>
+                <p><i class="fas fa-star"></i> <strong>Calificación IMDb:</strong> {{ movie.imdb_rating if movie.imdb_rating != 'N/A' else 'N/A' }}</p>
                 <p><i class="fas fa-clock"></i> <strong>Duración:</strong> {{ movie.runtime|default('N/A') }}</p>
                 <h4 class="mt-4 mb-2">Sinopsis</h4>
                 <p>{{ movie.plot }}</p>

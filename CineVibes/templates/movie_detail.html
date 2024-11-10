@@ -2,13 +2,18 @@
 
 {% block content %}
 <h1>{{ movie.title }}</h1>
-<!-- ... otros detalles de la película ... -->
+<p><strong>Año:</strong> {{ movie.year }}</p>
+<p><strong>Director:</strong> {{ movie.director }}</p>
+<p><strong>Calificación de IMDb:</strong> {{ movie.imdb_rating if movie.imdb_rating != 'N/A' else 'N/A' }}/10</p>
+<p><strong>Sinopsis:</strong> {{ movie.plot }}</p>
+<!-- Puedes agregar más detalles de la película aquí -->
 
 <h2>Reseñas</h2>
 {% if session.user_id %}
 <form action="{{ url_for('add_review', movie_id=movie.imdb_id) }}" method="POST">
-    <textarea name="content" required></textarea>
+    <textarea name="content" required placeholder="Escribe tu reseña aquí..."></textarea>
     <select name="rating" required>
+        <option value="">Selecciona una calificación</option>
         <option value="1">1 estrella</option>
         <option value="2">2 estrellas</option>
         <option value="3">3 estrellas</option>

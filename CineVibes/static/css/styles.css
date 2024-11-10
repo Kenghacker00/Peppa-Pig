@@ -63,15 +63,16 @@ main {
 .movie-card {
     display: flex;
     background: var(--white);
-    border-radius: 10px;
+    border-radius: 15px; /* Mejora el borde */
     overflow: hidden;
     margin-bottom: 20px;
-    box-shadow: 0 2px 5px var(--shadow-color);
-    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Agrega sombra en hover */
 }
 
 .movie-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Sombra más intensa en hover */
 }
 
 .movie-poster {
@@ -83,16 +84,21 @@ main {
 .movie-info {
     padding: 20px;
     flex: 1;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
 
 .movie-info h3 {
     margin-bottom: 15px;
     color: #333;
+    font-size: 1.25rem; /* Tamaño de fuente más grande */
 }
 
 .movie-info p {
     margin-bottom: 10px;
     color: #666;
+    font-size: 0.9rem; /* Tamaño de fuente más pequeño */
 }
 
 .btn-watch,
@@ -146,7 +152,7 @@ main {
 }
 
 .footer a {
-    color: var(--light-text);
+    color: var(-- light-text);
     transition: color 0.3s ease;
 }
 
@@ -308,7 +314,7 @@ main {
 
 .card {
     border: none;
-    border-radius: 10px;
+    border-radius: 15px; /* Mejora el borde */
     overflow: hidden;
     transition: transform 0.3s;
 }

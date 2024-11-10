@@ -184,32 +184,7 @@ def logout():
 
 @app.route('/movie/player/<string:movie_id>')
 def movie_player(movie_id):
-    # Diccionario con la información de las películas
-    movies = {
-        'tt1431045': {
-            'title': 'Deadpool',
-            'year': '2016',
-            'director': 'Tim Miller',
-            'plot': 'Un mercenario con una lengua afilada y un sentido del humor mórbido es sometido a un experimento clandestino que le deja con poderes de curación acelerados y una misión de venganza.',
-            'imdb_id': 'tt1431045'
-        },
-        'tt1537481': {
-            'title': 'Deadpool And Wolverine',
-            'year': '2024',
-            'director': 'Shawn Levy',
-            'plot': 'La nueva entrega de la saga donde Wade Wilson, conocido por todos como Deadpool, intenta llevar una vida normal lejos de su pasado como mercenario. Pero cuando su mundo se encuentra al borde de una catástrofe, se ve obligado a regresar a la acción.',
-            'imdb_id': 'tt1537481'
-        },
-        'tt10872600': {
-            'title': 'Spider-Man: No Way Home',
-            'year': '2021',
-            'director': 'Jon Watts',
-            'plot': 'Peter Parker es desenmascarado y por tanto no es capaz de separar su vida normal de los enormes riesgos que conlleva ser un súper héroe. Cuando pide ayuda a Doctor Strange, los riesgos pasan a ser aún más peligrosos, obligándole a descubrir lo que realmente significa ser Spider-Man.',
-            'imdb_id': 'tt10872600'
-        }
-    }
-
-    movie = movies.get(movie_id)
+    movie = movie_controller.get_movie_details(movie_id)  # Obtén los detalles de la película
     if movie is None:
         return "Película no encontrada", 404
 
@@ -223,9 +198,9 @@ def search():
         return render_template('search_results.html', movies=movies, query=query)
     return render_template('search.html')
 
-@app.route('/movie/<string:movie_id>', methods=['GET', 'POST'])
 def movie_detail(movie_id):
     movie = movie_controller.get_movie_details(movie_id)
+    print(movie)  # Esto imprimirá el objeto de película en la consola para que puedas ver su contenido
     if movie:
         return render_template('movie_detail.html', movie=movie)
     else:

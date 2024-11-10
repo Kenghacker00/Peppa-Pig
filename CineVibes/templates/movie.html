@@ -13,6 +13,7 @@
                 <h1 class="movie-title">{{ movie.title }}</h1>
                 <div class="movie-info">
                     <p class="year"><i class="fas fa-calendar-alt"></i> {{ movie.year }}</p>
+                    <p class="rating"><i class="fas fa-star"></i> Calificación IMDb: {{ movie.imdb_rating if movie.imdb_rating != 'N/A' else 'N/A' }}/10</p>
                     <!-- Puedes agregar más información aquí -->
                 </div>
             </div>
@@ -135,7 +136,7 @@
 }
 
 .form-control {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0. 1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--light-text);
 }
