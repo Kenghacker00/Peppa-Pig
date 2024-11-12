@@ -1,9 +1,60 @@
 {% extends 'base.html' %}
 
+{% block title %}CineVibes - Verificar Cuenta{% endblock %}
+
 {% block content %}
-<h2>Verificar cuenta</h2>
-<form method="POST">
-    <input type="text" name="code" placeholder="Ingrese el código de verificación" required>
-    <button type="submit">Verificar</button>
-</form>
+<div class="container animate__animated animate__fadeIn">
+    <h2 class="text-light text-center mb-4">Verificar Cuenta</h2>
+    <form method="POST" class="text-center">
+        <div class="form-group mb-4">
+            <input type="text" name="code" class="form-control form-control-lg bg-transparent text-light" placeholder="Ingrese el código de verificación" required>
+            <div class="invalid-feedback text-warning">
+                Por favor, ingrese el código de verificación.
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Verificar</button>
+    </form>
+    <div class="mt-4">
+        <p class="text-light">¿No recibiste el código? <a href="{{ url_for('resend_verification_code', email=email) }}" class="text-primary">Reenviar código</a></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+:root {
+    --input-bg: rgba(255, 255, 255, 0.1);
+    --input-border: rgba(255, 255, 255, 0.2);
+}
+
+.form-control {
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: #f8f9fa;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.form-control:focus {
+    background-color: var(--input-bg);
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.text-light {
+    color: #f8f9fa;
+}
+</style>
 {% endblock %}

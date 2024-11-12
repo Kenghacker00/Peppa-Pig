@@ -1,40 +1,50 @@
 {% extends "base.html" %}
 
-{% block title %}{{ movie.title }} ({{ movie.year }}) - CineVibes{% endblock %}
+{% block title %}{{ movie.title | default('Película Desconocida') }} ({{ movie.year | default('N/A') }}) - CineVibes{% endblock %}
 
 {% block content %}
 <div class="container-fluid animate__animated animate__fadeIn">
     <div class="row">
         <div class="col-12 col-lg-8 mb-4">
-            <div class="movie-player glass-effect">
-                <h2 class="movie-title mb-3">{{ movie.title }} ({{ movie.year }})</h2>
+            <div class="movie-player glass-effect p-4 rounded shadow">
+                <h2 class="movie-title mb-3" style="color: #ff4081;">{{ movie.title | default('Película Desconocida') }} ({{ movie.year | default('N/A') }})</h2>
                 {% if movie.imdb_id == 'tt1431045' %}
                 <!-- Reproductor para Deadpool (2016) -->
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive embed-responsive-16by9" style="height: 500px;">
                     <iframe class="embed-responsive-item"
                         src="https://luluvdo.com/e/2f87p50mtkny"
+                        sandbox="allow-same-origin allow-scripts allow-forms"
                         allowfullscreen
-                        sandbox="allow-scripts allow-same-origin allow-forms"
                         referrerpolicy="no-referrer">
                     </iframe>
                 </div>
                 {% elif movie.imdb_id == 'tt6263850' %}
                 <!-- Reproductor para Deadpool and Wolverine (2024) -->
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive embed-responsive-16by9" style="height: 500px;">
                     <iframe class="embed-responsive-item"
                         src="https://luluvdo.com/e/rmnybmum5g8z"
+                        sandbox="allow-same-origin allow-scripts allow-forms"
                         allowfullscreen
-                        sandbox="allow-scripts allow-same-origin allow-forms"
                         referrerpolicy="no-referrer">
                     </iframe>
                 </div>
                 {% elif movie.imdb_id == 'tt10872600' %}
                 <!-- Reproductor para Spider-Man: No Way Home (2021) -->
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive embed-responsive-16by9" style="height: 500px;">
                     <iframe class="embed-responsive-item"
-                        src="https://embedwish.com/e/9n1o8erntib4"
+                        src="https://embedwish.com/e/86bs9qlzx7at"
+                        sandbox="allow-same-origin allow-scripts allow-forms"
                         allowfullscreen
-                        sandbox="allow-scripts allow-same-origin allow-forms"
+                        referrerpolicy="no-referrer">
+                    </iframe>
+                </div>
+                {% elif movie.imdb_id == 'tt0433035' %}
+                <!-- Reproductor para Gigantes de acero (2011) -->
+                <div class="embed-responsive embed-responsive-16by9" style="height: 500px;">
+                    <iframe class="embed-responsive-item"
+                        src="https://luluvdo.com/e/w1iv5x90qirf"
+                        sandbox="allow-same-origin allow-scripts allow-forms"
+                        allowfullscreen
                         referrerpolicy="no-referrer">
                     </iframe>
                 </div>
@@ -46,17 +56,64 @@
             </div>
         </div>
         <div class="col-12 col-lg-4">
-            <div class="movie-info glass-effect p-4 mb-4">
-                <h3 class="mb-3">Detalles de la Película</h3>
-                <p><i class="fas fa-film"></i> <strong>Director:</strong> {{ movie.director }}</p>
-                <p><i class="fas fa-calendar-alt"></i> <strong>Año:</strong> {{ movie.year }}</p>
-                <p><i class="fas fa-star"></i> <strong>Calificación IMDb:</strong> {{ movie.imdb_rating if movie.imdb_rating != 'N/A' else 'N/A' }}</p>
-                <p><i class="fas fa-clock"></i> <strong>Duración:</strong> {{ movie.runtime|default('N/A') }}</p>
-                <h4 class="mt-4 mb-2">Sinopsis</h4>
-                <p>{{ movie.plot }}</p>
+            <div class="movie-info glass-effect p-4 mb-4 rounded shadow">
+                <h3 class="mb-3" style="color: #ff4081;">Detalles de la Película</h3>
+                <p style="color: #ff4081;"><i class="fas fa-film"></i> <strong>Director:</strong> {{ movie.director | default('N/A') }}</p>
+                <p style="color: #ff4081;"><i class="fas fa-calendar-alt"></i> <strong>Año:</strong> {{ movie.year | default('N/A') }}</p>
+                <p style="color: #ff4081;"><i class="fas fa-star"></i> <strong>Calificación IMDb:</strong> {{ movie.imdb_rating if movie.imdb_rating != 'N/A' else 'N/A' }}</p>
+                <p style="color: #ff4081;"><i class="fas fa-clock"></i> <strong>Duración:</strong> {{ movie.runtime | default('N/A') }}</p>
+                <p style="color: #ff4081;"><i class="fas fa-language"></i> <strong>Idioma:</strong> {{ movie.language | default('N/A') }}</p>
+                <p style="color: #ff4081;"><i class="fas fa-globe"></i> <strong>País:</strong> {{ movie.country | default('N/A') }}</p>
+                <p style="color: #ff4081;"><i class="fas fa-trophy"></i> <strong>Premios:</strong> {{ movie.awards | default('N/A') }}</p>
+                <h4 class=" mt-4 mb-2" style="color: #ff4081;">Sinopsis</h4>
+                <p style="color: #ffffff;">{{ movie.plot | default('N/A') }}</p>
+                <h4 class="mt-4 mb-2" style="color: #ff4081;">Actores</h4>
+                <p style="color: #ffffff;">{{ movie.actors | default('N/A') }}</p>
+                <h4 class="mt-4 mb-2" style="color: #ff4081;">Género</h4>
+                <p style="color: #ffffff;">{{ movie.genre | default('N/A') }}</p>
             </div>
         </div>
     </div>
+
+    <div class="comments-section glass-effect p-4 rounded shadow mb-4">
+        <h3 style="color: #ff4081;">Comentarios</h3>
+        <form id="comment-form" method="POST" action="{{ url_for('add_review', movie_id=movie.imdb_id) }}">
+            <div class="form-group">
+                <textarea class="form-control" name="content" rows="3" placeholder="Escribe tu comentario aquí..." required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="rating">Calificación:</label>
+                <select class="form-control" name="rating" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" style="background-color: #ff4081; border: none;">Enviar Comentario</button>
+        </form>
+
+        <div class="comments-list mt-4">
+            {% for review in reviews %}
+                <div class="comment mb-3 p-2 border rounded" style="background-color: rgba(255, 255, 255, 0.1);">
+                    <div class="d-flex align-items-center">
+                        <img src="{{ url_for('static', filename=review.user_profile_pic) if review.user_profile_pic else url_for('static', filename='images/default_profile.png') }}"
+                             alt="Foto de Perfil"
+                             class="profile-img" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                        <strong>{{ review.user_nickname }}</strong> ({{ review.created_at }}):
+                    </div>
+                    <p>{{ review.review_text }}</p>
+                    <p>Calificación: {{ review.rating }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setupAdBlockDetection();
+        });
+    </script>
 
     <div class="ad-blocker-notice alert alert-info mt-4">
         <i class="fas fa-shield-alt"></i> Para una mejor experiencia, recomendamos usar un bloqueador de anuncios en tu navegador.

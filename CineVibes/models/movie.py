@@ -20,4 +20,11 @@ class Movie:
         conn.commit()
         conn.close()
 
+    def get_all_movies(self):
+        conn = sqlite3.connect(self.db_path)
+        conn.row_factory = sqlite3.Row
+        movies = conn.execute('SELECT imdb_id FROM movies').fetchall()
+        conn.close()
+        return [movie['imdb_id'] for movie in movies]
+
     # Aquí puedes agregar más métodos relacionados con las películas

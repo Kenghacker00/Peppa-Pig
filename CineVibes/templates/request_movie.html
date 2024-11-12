@@ -7,8 +7,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="glass-effect card border-0 shadow-lg mt-4">
-                <div class="card-header bg-transparent border-0">
-                    <h2 class="text-center text-light mb-0">
+                <div class="card-header bg-transparent border-0 text-center">
+                    <h2 class="text-light mb-0">
                         <i class="fas fa-film me-2 text-accent"></i>
                         Solicitar una Película
                     </h2>
@@ -22,11 +22,7 @@
                         </p>
                     </div>
 
-                    <form action="{{ url_for('request_movie') }}"
-                          method="POST"
-                          class="needs-validation"
-                          novalidate>
-
+                    <form action="{{ url_for('request_movie') }}" method="POST" class="needs-validation" novalidate>
                         <!-- Título de la Película -->
                         <div class="form-group mb-4">
                             <label for="movie_title" class="form-label text-light">
@@ -38,11 +34,25 @@
                                        class="form-control form-control-lg bg-transparent text-light"
                                        id="movie_title"
                                        name="movie_title"
-                                       placeholder="Ej: Los Vengadores"
-                                       required>
+                                       value="{{ title }}"  <!-- Prellenar con el título -->
                                 <div class="invalid-feedback text-warning">
                                     Por favor, ingresa el título de la película.
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Año de la Película (opcional) -->
+                        <div class="form-group mb-4">
+                            <label for="movie_year" class="form-label text-light">
+                                <i class="fas fa-calendar me-2 text-accent"></i>
+                                Año de la Película (Opcional)
+                            </label>
+                            <div class="input-group">
+                                <input type="text"
+                                       class="form-control form-control-lg bg-transparent text-light"
+                                       id="movie_year"
+                                       name="movie_year"
+                                       value="{{ year }}"  <!-- Prellenar con el año -->
                             </div>
                         </div>
 
@@ -57,8 +67,7 @@
                                        class="form-control form-control-lg bg-transparent text-light"
                                        id="user_email"
                                        name="user_email"
-                                       placeholder="ejemplo@correo.com"
-                                       required>
+                                       value="{{ user_email }}"  <!-- Prellenar con el correo del usuario -->
                                 <div class="invalid-feedback text-warning">
                                     Por favor, ingresa un correo electrónico válido.
                                 </div>
@@ -75,30 +84,29 @@
                                 Información Adicional (Opcional)
                             </label>
                             <textarea class="form-control bg-transparent text-light"
-                                     id="additional_info"
-                                     name="additional_info"
-                                     rows="3"
-                                     placeholder="Año de lanzamiento, director, actores principales..."></textarea>
+                                      id="additional_info"
+                                      name="additional_info"
+                                      rows="3"
+                                      placeholder="Año de lanzamiento, director, actores principales..."></textarea>
                         </div>
 
                         <!-- Botón de Envío -->
                         <div class="d-grid gap-2">
-                            <button type="submit"
-                                    class="btn btn-lg btn-primary hover-effect">
+                            <button type="submit" class="btn btn-lg btn-primary hover-effect">
                                 <i class="fas fa-paper-plane me-2"></i>
                                 Enviar Solicitud
                             </button>
                         </div>
                     </form>
+
                 </div>
             </div>
-
             <!-- Mensajes de Estado -->
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
                         <div class="alert alert-{{ category }} alert-dismissible fade show mt-4" role="alert">
-                            <i class="fas fa-info-circle me-2"></i>
+                            <i class="fas fa -info-circle me-2"></i>
                             {{ message }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
@@ -108,4 +116,56 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+:root {
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --card-border: rgba(255, 255, 255, 0.2);
+}
+
+.glass-effect {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--card-border);
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.card-header {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--card-border);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.text-light {
+    color: #f8f9fa;
+}
+
+.text-light:hover {
+    text-decoration: underline;
+}
+
+.hover-effect {
+    transition: transform 0.2s;
+}
+
+.hover-effect:hover {
+    transform: scale(1.05);
+}
+</style>
 {% endblock %}

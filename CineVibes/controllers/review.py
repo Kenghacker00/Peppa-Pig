@@ -49,7 +49,7 @@ class ReviewController:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
             cursor.execute('''
-                SELECT r.*, u.nickname as user_nickname
+                SELECT r.*, u.nickname as user_nickname, u.profile_pic as user_profile_pic
                 FROM reviews r
                 JOIN users u ON r.user_id = u.id
                 WHERE r.movie_id = ?
@@ -61,6 +61,7 @@ class ReviewController:
             return [{
                 'id': review['id'],
                 'user_nickname': review['user_nickname'],
+                'user_profile_pic': review['user_profile_pic'],
                 'review_text': review['review_text'],
                 'rating': review['rating'],
                 'created_at': review['created_at']

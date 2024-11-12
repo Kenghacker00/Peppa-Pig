@@ -6,8 +6,8 @@
 <div class="container animate__animated animate__fadeIn">
     <div class="row">
         <div class="col-md-4">
-            <div class="profile-card glass-effect">
-                <div class="profile-header">
+            <div class="profile-card glass-effect p-4 rounded">
+                <div class="profile-header text-center">
                     <img src="{{ url_for('static', filename=user.profile_pic) if user.profile_pic else url_for('static', filename='images/default_profile.png') }}"
                          alt="Foto de perfil"
                          class="profile-image animate__animated animate__fadeIn">
@@ -20,7 +20,7 @@
                     </div>
                 </div>
 
-                <div class="profile-info">
+                <div class="profile-info text-center">
                     <h2 class="profile-name">{{ user.nickname }}</h2>
                     <p class="profile-email">
                         <i class="fas fa-envelope"></i> {{ user.email }}
@@ -40,7 +40,7 @@
         </div>
 
         <div class="col-md-8">
-            <div class="reviews-section glass-effect">
+            <div class="reviews-section glass-effect p-4 rounded">
                 <h3 class="section-title">
                     <i class="fas fa-star"></i> Mis Reseñas
                 </h3>
@@ -73,7 +73,7 @@
                         <i class="fas fa-film fa-3x"></i>
                         <p>Aún no has escrito reseñas</p>
                         <a href="{{ url_for('index') }}" class="btn btn-primary">
-                            <i class="fas fa-plus"></i> Ver peliculas
+                            <i class="fas fa-plus"></i> Ver películas
                         </a>
                     </div>
                 {% endif %}
@@ -118,7 +118,7 @@
     transform: scale(1.05);
 }
 
-.profile-name {
+.profile -name {
     color: var(--light-text);
     font-size: 1.8rem;
     margin-bottom: 10px;

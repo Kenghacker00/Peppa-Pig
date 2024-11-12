@@ -3,9 +3,52 @@
 {% block title %}CineVibes - Buscar Películas{% endblock %}
 
 {% block content %}
-<h2>Buscar Películas</h2>
-<form method="GET" action="{{ url_for('search') }}" class="form-inline mb-4">
-    <input type="text" class="form-control mr-2" name="q" placeholder="Buscar..." required>
-    <button type="submit" class="btn btn-primary">Buscar</button>
-</form>
+<div class="container animate__animated animate__fadeIn">
+    <h2 class="text-light text-center mb-4">Buscar Películas</h2>
+    <form method="GET" action="{{ url_for('search') }}" class="form-inline justify-content-center mb-4">
+        <div class="input-group w-75">
+            <input type="text" class="form-control form-control-lg bg-transparent text-light" name="q" placeholder="Buscar..." required>
+            <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+:root {
+    --input-bg: rgba(255, 255, 255, 0.1);
+    --input-border: rgba(255, 255, 255, 0.2);
+}
+
+.form-control {
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: #f8f9fa;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.form-control:focus {
+    background-color: var(--input-bg);
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.text-light {
+    color: #f8f9fa;
+}
+</style>
 {% endblock %}

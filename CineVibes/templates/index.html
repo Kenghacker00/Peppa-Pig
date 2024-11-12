@@ -5,19 +5,17 @@
 {% block content %}
 <div class="container-fluid animate__animated animate__fadeIn">
     <!-- Hero Section -->
-    <div class="hero-section glass-effect text-center mb-5">
-        <h1 class="display-4 mb-4">Bienvenido a CineVibes</h1>
-        <p class="lead">Tu destino para el mejor entretenimiento cinematográfico</p>
-        <a href="{{ url_for('search') }}" class="btn btn-outline-light btn-lg">Buscar Películas</a>
+    <div class="hero-section text-center mb-5 p-5 hero-background"> <h1 class="display-4 mb-4 text-white">Bienvenido a CineVibes</h1>
+        <p class="lead text-white">Tu destino para el mejor entretenimiento cinematográfico</p>
+        <a href="{{ url_for('search') }}" class="btn btn-lg">Buscar Películas</a>
     </div>
-
     <!-- Featured Movies Section -->
     <section class="featured-movies mb-5">
-        <h2 class="section-title"><i class="fas fa-star"></i> Películas Destacadas</h2>
+        <h2 class="section-title text-center mb-4 text-white"><i class="fas fa-star"></i> Películas Destacadas</h2>
         <div class="row">
             <!-- Deadpool -->
             <div class="col-md-6 mb-4">
-                <div class="movie-card glass-effect animate__animated animate__fadeInLeft">
+                <div class="movie-card glass-effect animate__animated animate__fadeIn">
                     <div class="row no-gutters">
                         <div class="col-md-4">
                             <img src="https://m.media-amazon.com/images/M/MV5BYzE5MjY1ZDgtMTkyNC00MTMyLThhMjAtZGI5OTE1NzFlZGJjXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
@@ -25,17 +23,17 @@
                                  class="movie-poster">
                         </div>
                         <div class="col-md-8">
-                            <div class="movie-info p-4">
-                                <h3 class="movie-title">Deadpool</h3>
+                            <div class="movie-info p-4 bg-dark text-white rounded">
+                                <h3 class="movie-title" style="color: #ff4081;">Deadpool</h3>
                                 <div class="movie-meta">
                                     <span><i class="fas fa-calendar"></i> 2016</span>
                                     <span><i class="fas fa-film"></i> Tim Miller</span>
                                 </div>
-                                <p class="movie-description">
+                                <div class="movie-description">
                                     Un mercenario con una lengua afilada y un sentido del humor mórbido es sometido a un experimento clandestino que le deja con poderes de curación acelerados y una misión de venganza.
-                                </p>
+                                </div>
                                 <a href="{{ url_for('movie_player', movie_id='tt1431045') }}"
-                                   class="btn btn-primary btn-watch">
+                                   class="btn btn-danger btn-watch mt-2">
                                     <i class="fas fa-play"></i> Ver Película
                                 </a>
                             </div>
@@ -46,7 +44,7 @@
 
             <!-- Deadpool And Wolverine -->
             <div class="col-md-6 mb-4">
-                <div class="movie-card glass-effect animate__animated animate__fadeInRight">
+                <div class="movie-card glass-effect animate__animated animate__fadeIn">
                     <div class="row no-gutters">
                         <div class="col-md-4">
                             <img src="https://cdn.marvel.com/content/1x/dp3_1sht_digital_srgb_ka_swords_v5_resized.jpg"
@@ -54,17 +52,17 @@
                                  class="movie-poster">
                         </div>
                         <div class="col-md-8">
-                            <div class="movie-info p-4">
-                                <h3 class="movie-title">Deadpool And Wolverine</h3>
+                            <div class="movie-info p-4 bg-dark text-white rounded">
+                                <h3 class="movie-title" style="color: #ff4081;">Deadpool And Wolverine</h3>
                                 <div class="movie-meta">
                                     <span><i class="fas fa-calendar"></i> 2024</span>
                                     <span><i class="fas fa-film"></i> Shawn Levy</span>
                                 </div>
-                                <p class="movie-description">
+                                <div class="movie-description">
                                     La nueva entrega de la saga donde Wade Wilson intenta llevar una vida normal lejos de su pasado como mercenario. Pero cuando su mundo se encuentra al borde de una catástrofe, se ve obligado a regresar a la acción.
-                                </p>
+                                </div>
                                 <a href="{{ url_for('movie_player', movie_id='tt6263850') }}"
-                                   class="btn btn-primary btn-watch">
+                                   class="btn btn-danger btn-watch mt-2">
                                     <i class="fas fa-play"></i> Ver Película
                                 </a>
                             </div>
@@ -75,25 +73,52 @@
 
             <!-- Spider-Man: No Way Home -->
             <div class="col-md-6 mb-4">
-                <div class="movie-card glass-effect animate__animated animate__fadeInRight">
+                <div class="movie-card glass-effect animate__animated animate__fadeIn">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <img src="https://pics.filmaffinity.com/Spider_Man_No_Way_Home-387287198-large.jpg"
-                                 alt="Spider-Man: No Way Home Poster"
+                            <img src="https://pics.filmaffinity.com/Spider_Man_No_Way_Home-387287198-large.jpg" alt="Spider-Man: No Way Home Poster"
                                  class="movie-poster">
                         </div>
                         <div class="col-md-8">
-                            <div class="movie-info p-4">
-                                <h3 class="movie-title">Spider-Man: No Way Home</h3>
+                            <div class="movie-info p-4 bg-dark text-white rounded">
+                                <h3 class="movie-title" style="color: #ff4081;">Spider-Man: No Way Home</h3>
                                 <div class="movie-meta">
                                     <span><i class="fas fa-calendar"></i> 2021</span>
                                     <span><i class="fas fa-film"></i> Jon Watts</span>
                                 </div>
-                                <p class="movie-description">
+                                <div class="movie-description">
                                     Peter Parker es desenmascarado y por tanto no es capaz de separar su vida normal de los enormes riesgos que conlleva ser un súper héroe. Cuando pide ayuda a Doctor Strange, los riesgos pasan a ser aún más peligrosos, obligándole a descubrir lo que realmente significa ser Spider-Man.
-                                </p>
+                                </div>
                                 <a href="{{ url_for('movie_player', movie_id='tt10872600') }}"
-                                   class="btn btn-primary btn-watch">
+                                   class="btn btn-danger btn-watch mt-2">
+                                    <i class="fas fa-play"></i> Ver Película
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gigantes de acero -->
+            <div class="col-md-6 mb-4">
+                <div class="movie-card glass-effect animate__animated animate__fadeIn">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="https://static.wikia.nocookie.net/doblaje/images/e/e1/POSTERgigantesdeaceroGDE.jpg/revision/latest?cb=20110831010208&path-prefix=es" alt="Gigantes de acero Poster"
+                                 class="movie-poster">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="movie-info p-4 bg-dark text-white rounded">
+                                <h3 class="movie-title" style="color: #ff4081;">Gigantes de acero</h3>
+                                <div class="movie-meta">
+                                    <span><i class="fas fa-calendar"></i> 2011</span>
+                                    <span><i class="fas fa-film"></i> Shawn Levy</span>
+                                </div>
+                                <div class="movie-description">
+                                    En un futuro no muy lejano el boxeo es robótico: en los combates ya no se enfrentan seres humanos, sino robots humanoides, sofisticadas máquinas diseñadas para luchar. Charlie Kenton, un antiguo púgil que casi llegó a alcanzar la gloria, está pasando una mala racha como promotor de combates. Un día, encuentra un viejo robot desechado y, al comprobar que es un gran boxeador, decide entrenarlo.
+                                </div>
+                                <a href="{{ url_for('movie_player', movie_id='tt0433035') }}"
+                                   class="btn btn-danger btn-watch mt-2">
                                     <i class="fas fa-play"></i> Ver Película
                                 </a>
                             </div>
@@ -106,21 +131,21 @@
 
     <!-- Recent Movies Section -->
     <section class="recent-movies">
-        <h2 class="section-title"><i class="fas fa-clock"></i> Películas Recientes</h2>
+        <h2 class="section-title text-center mb-4 text-white"><i class="fas fa-clock"></i> Películas Recientes</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col animate__animated animate__fadeInUp">
                 <div class="movie-item glass-effect">
-                    <div class="movie-item-content p-4">
-                        <h3 class="movie-title">Deadpool And Wolverine</h3>
+                    <div class="movie-item-content p-4 bg-dark text-white rounded">
+                        <h3 class="movie-title" style="color: #ff4081;">Deadpool And Wolverine</h3>
                         <div class="movie-meta mb-3">
                             <span><i class="fas fa-calendar"></i> 2024</span>
                             <span><i class="fas fa-film"></i> Shawn Levy</span>
                         </div>
-                        <p class="movie-description">
+                        <div class="movie-description">
                             La nueva entrega de la saga donde Wade Wilson intenta llevar una vida normal lejos de su pasado como mercenario. Pero cuando su mundo se encuentra al borde de una catástrofe, se ve obligado a regresar a la acción.
-                        </p>
+                        </div>
                         <a href="{{ url_for('movie_player', movie_id='tt1537481') }}"
-                           class="btn btn-primary btn-watch">
+                           class="btn btn-danger btn-watch mt-2">
                             <i class="fas fa-play"></i> Ver Película
                         </a>
                     </div>
@@ -130,4 +155,23 @@
         </div>
     </section>
 </div>
+
+<!-- JavaScript para efectos -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const movieCards = document.querySelectorAll('.movie-card, .movie-item');
+
+        movieCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('shadow-lg');
+                card.style.transform = 'scale(1.05)';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('shadow-lg');
+                card.style.transform = 'scale(1)';
+            });
+        });
+    });
+</script>
 {% endblock %}

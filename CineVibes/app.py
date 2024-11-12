@@ -12,7 +12,11 @@ from database import db
 import random
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import SubmitField
+from wtforms import SubmitField, StringField
+from email.mime.text import MIMEText
+from utils.email import send_movie_request_email
+from config import Config
+import smtplib
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'tu_clave_secreta'
@@ -31,9 +35,16 @@ class ProfileForm(FlaskForm):
     ])
     submit = SubmitField('Actualizar')
 
+def get_user():
+    """Función para obtener el perfil del usuario si está autenticado."""
+    if 'user_id' in session:
+        return auth_controller.get_user_profile(session['user_id'])
+    return None
+
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
-    if 'user_id' not in session:
+    user = get_user()
+    if user is None:
         flash('Debes iniciar sesión para ver tu perfil', 'error')
         return redirect(url_for('login'))
 
@@ -58,7 +69,6 @@ def profile():
             flash('Foto de perfil actualizada con éxito', 'success')
             return redirect(url_for('profile'))
 
-    user = auth_controller.get_user_profile(session['user_id'])
     reviews = review_controller.get_user_reviews(session['user_id'])
     return render_template('profile.html', user=user, reviews=reviews, form=form)
 
@@ -73,6 +83,7 @@ def close_connection(exception):
 
 @app.route('/')
 def index():
+    user = get_user()
     with get_db() as conn:
         cursor = conn.cursor()
         try:
@@ -82,7 +93,7 @@ def index():
         except sqlite3.OperationalError:
             # Si la tabla no existe, devuelve una lista vacía
             recent_movies = []
-    return render_template('index.html', movies=recent_movies)
+    return render_template('index.html', movies=recent_movies, user=user)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -126,10 +137,11 @@ def register():
             return jsonify({'success': False, 'message': error})
         flash(error, 'error')
 
-    return render_template('register.html')
+    return render_template('register.html', user=get_user())
 
 @app.route('/verify/<email>', methods=['GET', 'POST'])
 def verify(email):
+    user = get_user()
     if request.method == 'POST':
         code = request.form.get('code')
         if auth_controller.verify_code(email, code):
@@ -138,10 +150,11 @@ def verify(email):
         else:
             flash('Código de verificación incorrecto.', 'error')
 
-    return render_template('verify.html', email=email)
+    return render_template('verify.html', email=email, user=user)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    user = get_user()
     if request.method == 'POST':
         # Obtener datos del formulario o JSON
         data = request.get_json() if request.is_json else request.form
@@ -150,18 +163,18 @@ def login():
 
         db = get_db()
         error = None
-        user = db.execute('SELECT * FROM users WHERE email = ?', (email,)).fetchone()
+        user_data = db.execute('SELECT * FROM users WHERE email = ?', (email,)).fetchone()
 
-        if user is None:
+        if user_data is None:
             error = 'Email incorrecto.'
-        elif not check_password_hash(user['password'], password):
+        elif not check_password_hash(user_data['password'], password):
             error = 'Contraseña incorrecta.'
-        elif not user['is_verified']:
+        elif not user_data['is_verified']:
             error = 'Por favor verifica tu email antes de iniciar sesión.'
 
         if error is None:
             session.clear()
-            session['user_id'] = user['id']
+            session['user_id'] = user_data['id']
 
             if request.is_json:
                 return jsonify({
@@ -174,7 +187,7 @@ def login():
             return jsonify({'success': False, 'message': error})
         flash(error, 'error')
 
-    return render_template('login.html')
+    return render_template('login.html', user=user)
 
 @app.route('/logout')
 def logout():
@@ -184,74 +197,87 @@ def logout():
 
 @app.route('/movie/player/<string:movie_id>')
 def movie_player(movie_id):
+    user = get_user()
     movie = movie_controller.get_movie_details(movie_id)  # Obtén los detalles de la película
     if movie is None:
         return "Película no encontrada", 404
 
-    return render_template('movie_player.html', movie=movie)
+    reviews = review_controller.get_movie_reviews(movie_id)  # Obtén los comentarios de la película
+    return render_template('movie_player.html', movie=movie, reviews=reviews, user=user)
 
 @app.route('/search', methods=['GET'])
 def search():
+    user = get_user()
     query = request.args.get('q', '')
     if query:
         movies = movie_controller.search_movies(query)
-        return render_template('search_results.html', movies=movies, query=query)
-    return render_template('search.html')
+        available_movies = movie_controller.get_available_movies()  # Ahora debería funcionar
+        return render_template('search_results.html', movies=movies.get('Search', []), available_movies=available_movies, query=query, user=user)
+    return render_template('search.html', user=user)
 
+@app.route('/movie/<string:movie_id>')
 def movie_detail(movie_id):
+    user = get_user()
     movie = movie_controller.get_movie_details(movie_id)
-    print(movie)  # Esto imprimirá el objeto de película en la consola para que puedas ver su contenido
-    if movie:
-        return render_template('movie_detail.html', movie=movie)
-    else:
-        flash('Película no encontrada', 'error')
-        return redirect(url_for('index'))
-
-def search_movies(query):
-    url = f"http://www.omdbapi.com/?apikey={Config.OMDB_API_KEY}&s={query}"
-    try:
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        data = response.json()
-        print(data)  # Imprimir la respuesta para depuración
-        return data
-    except requests.exceptions.RequestException as e:
-        print(f"Error al conectar con la API de OMDb: {e}")
-        return {"errorMessage": "No se pudo conectar con la API de OMDb"}
+    if movie is None:
+        return "Película no encontrada", 404
+    return render_template('movie_detail.html', movie=movie, user=user)
 
 @app.route('/movie/<string:movie_id>/review', methods=['POST'])
 def add_review(movie_id):
     if 'user_id' not in session:
-        flash('Debes iniciar sesión para dejar una reseña.', 'error')
+        flash('Debes iniciar sesión para dejar un comentario.', 'error')
         return redirect(url_for('login'))
 
     content = request.form['content']
     rating = request.form['rating']
 
     review_controller.add_review(session['user_id'], movie_id, content, rating)
-    flash('Tu reseña ha sido añadida.', 'success')
-    return redirect(url_for('movie_detail', movie_id=movie_id))
-
-from utils.email import send_movie_request_email
+    flash('Tu comentario ha sido añadido.', 'success')
+    return redirect(url_for('movie_player', movie_id=movie_id))
 
 @app.route('/request-movie', methods=['GET', 'POST'])
 def request_movie():
+    user = get_user()  # Obtén el perfil del usuario
+
+    # Obtener el título y el año de la película de los parámetros de la consulta
+    movie_title = request.args.get('title', '')
+    movie_year = request.args.get('year', '')
+
     if request.method == 'POST':
-        movie_title = request.form['movie_title']
         user_email = request.form['user_email']
         additional_info = request.form.get('additional_info', '')
 
-        # Enviar email sin el additional_info si la función solo acepta 3 argumentos
-        send_movie_request_email('vibescine10@gmail.com', movie_title, user_email)
+        # Enviar email
+        send_movie_request_email('vibescine10@gmail.com', movie_title, user_email, additional_info)
 
         flash('Tu solicitud de película ha sido enviada.', 'success')
         return redirect(url_for('index'))
 
-    return render_template('request_movie.html')
+    # Pasa el correo electrónico del usuario a la plantilla
+    user_email = user['email'] if user else ''
+    return render_template('request_movie.html', title=movie_title, year=movie_year, user_email=user_email, user=user)
+
+def send_movie_request_email(to_email, movie_title, user_email, additional_info=None):
+    subject = f"Solicitud de película: {movie_title}"
+    body = f"""Se ha recibido una solicitud para la película '{movie_title}'
+    Del usuario: {user_email}
+    Información adicional: {additional_info or 'No proporcionada'}"""
+
+    msg = MIMEText(body)
+    msg['Subject'] = subject
+    msg['From'] = Config.EMAIL_SENDER
+    msg['To'] = to_email
+
+    with smtplib.SMTP('smtp.gmail.com', 587) as server:
+        server.starttls()
+        server.login(Config.EMAIL_SENDER, Config.EMAIL_PASSWORD)
+        server.sendmail(Config.EMAIL_SENDER, to_email, msg.as_string())
 
 @app.route('/favorites', methods=['GET', 'POST'])
 def favorites():
-    if 'user_id' not in session:
+    user = get_user()
+    if user is None:
         return redirect(url_for('login'))
 
     if request.method == 'POST':
@@ -260,20 +286,31 @@ def favorites():
         return jsonify({'success': True})
 
     favorites = movie_controller.get_user_favorites(session['user_id'])
-    return render_template('favorites.html', movies=favorites)
+    return render_template('favorites.html', movies=favorites, user=user)
+
+@app.route('/resend-verification-code/<email>', methods=['POST'])
+def resend_verification_code(email):
+    # Lógica para reenviar el código de verificación
+    verification_code = ''.join(random.choices('0123456789', k=6))
+    # Aquí deberías enviar el correo de verificación
+    send_verification_email(email, verification_code)
+    flash('Se ha reenviado el código de verificación a tu correo.', 'success')
+    return redirect(url_for('verify', email=email))
 
 @app.route('/recommend')
 def recommend():
-    if 'user_id' not in session:
+    user = get_user()
+    if user is None:
         return redirect(url_for('login'))
 
     recommendations = movie_controller.get_recommendations(session['user_id'])
-    return render_template('recommend.html', movies=recommendations)
+    return render_template('recommend.html', movies=recommendations, user=user)
 
 @app.route('/genres/<genre>')
 def genre_movies(genre):
+    user = get_user()
     movies = movie_controller.get_movies_by_genre(genre)
-    return render_template('genre_movies.html', genre=genre, movies=movies)
+    return render_template('genre_movies.html', genre=genre, movies=movies, user=user)
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -281,14 +318,20 @@ def page_not_found(e):
 
 @app.errorhandler(500)
 def internal_server_error(e):
-    return render_template('500.html'), 500
+    # Intenta obtener el usuario de la sesión
+    user = None
+    if 'user_id' in session:
+        user = auth_controller.get_user_profile(session['user_id'])
+
+    return render_template('500.html', user=user), 500
 
 @app.route('/movie/<string:imdb_id>', methods=['GET', 'POST'])
 def movie(imdb_id):
+    user = get_user()
     movie = movie_controller.get_movie_details(imdb_id)
     form = ReviewForm()
     reviews = review_controller.get_movie_reviews(imdb_id)
-    return render_template('movie.html', movie=movie, form=form, reviews=reviews)
+    return render_template('movie.html', movie=movie, form=form, reviews=reviews, user=user)
 
 def allowed_file(filename):
     return '.' in filename and \

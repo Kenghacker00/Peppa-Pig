@@ -3,32 +3,80 @@
 {% block title %}Registro - CineVibes{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">Registro de Usuario</div>
-            <div class="card-body">
-                <div id="message"></div>
-                <form id="register-form" method="POST">
-                    <div class="mb-3">
-                        <label for="nickname" class="form-label">Apodo:</label>
-                        <input type="text" class="form-control" id="nickname" name="nickname" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Correo Electrónico:</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña:</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Registrar</button>
-                </form>
+<div class="container animate__animated animate__fadeIn">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card glass-effect">
+                <div class="card-header text-center">
+                    <h2>Registro de Usuario</h2>
+                </div>
+                <div class="card-body">
+                    <div id="message"></div>
+                    <form id="register-form" method="POST">
+                        <div class="mb-3">
+                            <label for="nickname" class="form-label">Apodo:</label>
+                            <input type="text" class="form-control" id="nickname" name="nickname" required placeholder="Ingresa tu apodo">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico:</label>
+                            <input type="email" class="form-control" id="email" name="email" required placeholder="Ingresa tu correo electrónico">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña:</label>
+                            <input type="password" class="form-control" id="password" name="password" required placeholder="Crea una contraseña">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+                    </form>
+                </div>
             </div>
-        </div>
-        <div class="mt-3 text-center">
-            <a href="{{ url_for('login') }}">¿Ya tienes una cuenta? Inicia sesión aquí.</a>
+            <div class="mt-3 text-center">
+                <a href="{{ url_for('login') }}" class="text-light">¿Ya tienes una cuenta? Inicia sesión aquí.</a>
+            </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+:root {
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --card-border: rgba(255, 255, 255, 0.2);
+}
+
+.glass-effect {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--card-border);
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.card-header {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--card-border);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.text-light {
+    color: #f8f9fa;
+}
+
+.text-light:hover {
+    text-decoration: underline;
+}
+</style>
 {% endblock %}
