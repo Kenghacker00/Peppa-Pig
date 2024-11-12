@@ -241,11 +241,12 @@ def request_movie():
     user = get_user()  # Obtén el perfil del usuario
 
     # Obtener el título y el año de la película de los parámetros de la consulta
-    movie_title = request.args.get('title', '')
+    movie_title = request.args.get('title', '').strip()
     movie_year = request.args.get('year', '')
 
     if request.method == 'POST':
         user_email = request.form['user_email']
+        movie_title = request.form['movie_title']  # Obtén el título del formulario
         additional_info = request.form.get('additional_info', '')
 
         # Enviar email

@@ -48,6 +48,16 @@
                         referrerpolicy="no-referrer">
                     </iframe>
                 </div>
+                {% elif movie.imdb_id == 'tt2263944' %}
+                <!-- Dragon ball Z: Battle Of Gods (2013) -->
+                <div class="embed-responsive embed-responsive-16by9" style="height: 500px;">
+                    <iframe class="embed-responsive-item"
+                        src="https://flaswish.com/e/vmba3zf72s3p"
+                        sandbox="allow-same-origin allow-scripts allow-forms"
+                        allowfullscreen
+                        referrerpolicy="no-referrer">
+                    </iframe>
+                </div>
                 {% else %}
                 <div class="alert alert-warning">
                     <i class="fas fa-exclamation-triangle"></i> Lo sentimos, el video no está disponible en este momento.
@@ -109,10 +119,47 @@
             {% endfor %}
         </div>
     </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Bloquear ventanas emergentes
+            window.open = function() {
+                console.log("Se intentó abrir una ventana emergente, pero se bloqueó.");
+                return null; // Bloquea la apertura de nuevas ventanas
+            };
+
+            // Detectar y bloquear anuncios
+            const iframes = document.querySelectorAll('iframe');
+            iframes.forEach(iframe => {
+                iframe.addEventListener('load', function() {
+                    try {
+                        const iframeWindow = iframe.contentWindow;
+                        // Bloquear cualquier intento de abrir una nueva ventana desde el iframe
+                        iframeWindow.open = function() {
+                            console.log("Se intentó abrir una ventana emergente desde el iframe, pero se bloqueó.");
+                            return null; // Bloquea la apertura de nuevas ventanas
+                        };
+                    } catch (e) {
+                        console.error("No se pudo acceder al contenido del iframe:", e);
+                    }
+                });
+            });
+
+            // Mensaje para el usuario sobre el bloqueador de anuncios
             setupAdBlockDetection();
         });
+
+        function setupAdBlockDetection() {
+            // Aquí puedes implementar la lógica para detectar bloqueadores de anuncios
+            // Por ejemplo, puedes verificar si un elemento específico está presente en la página
+            const adBlockDetected = false; // Cambia esto según tu lógica de detección
+
+            if (adBlockDetected) {
+                document.querySelector('.ad-blocker-notice').style.display = 'block';
+            } else {
+                document.querySelector('.ad-blocker-notice').style.display = 'none';
+            }
+        }
     </script>
 
     <div class="ad-blocker-notice alert alert-info mt-4">
