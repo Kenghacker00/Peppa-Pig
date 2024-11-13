@@ -211,7 +211,7 @@ def search():
     query = request.args.get('q', '')
     if query:
         movies = movie_controller.search_movies(query)
-        available_movies = movie_controller.get_available_movies()  # Ahora debería funcionar
+        available_movies = movie_controller.get_available_movies()  # Obtener las películas disponibles
         return render_template('search_results.html', movies=movies.get('Search', []), available_movies=available_movies, query=query, user=user)
     return render_template('search.html', user=user)
 
@@ -245,9 +245,23 @@ def request_movie():
     movie_year = request.args.get('year', '')
 
     if request.method == 'POST':
+        # Verificar si el usuario está autenticado
+        if user is None:
+            flash('Debes iniciar sesión para enviar una solicitud de película.', 'error')
+            return redirect(url_for('login'))
+
         user_email = request.form['user_email']
         movie_title = request.form['movie_title']  # Obtén el título del formulario
         additional_info = request.form.get('additional_info', '')
+
+        # Validar que el título de la película y el correo electrónico no estén vacíos
+        if not movie_title:
+            flash('El título de la película es obligatorio.', 'error')
+            return redirect(url_for('request_movie', title=movie_title, year=movie_year))
+
+        if not user_email:
+            flash('El correo electrónico es obligatorio.', 'error')
+            return redirect(url_for('request_movie', title=movie_title, year=movie_year))
 
         # Enviar email
         send_movie_request_email('vibescine10@gmail.com', movie_title, user_email, additional_info)

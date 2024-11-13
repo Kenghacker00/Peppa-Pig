@@ -264,3 +264,27 @@ main {
 .hero-section .btn:hover {
     background-color: #e63972; /* Color de fondo al pasar el mouse (opcional) */
 }
+
+.alert {
+    font-size: 1rem; /* Tamaño de fuente más grande */
+    margin-bottom: 1rem; /* Espaciado inferior */
+}
+
+.alert-success {
+    background-color: #d4edda; /* Color de fondo verde claro */
+    color: #155724; /* Color de texto verde oscuro */
+}
+
+.alert-error {
+    background-color: #f8d7da; /* Color de fondo rojo claro */
+    color: #721c24; /* Color de texto rojo oscuro */
+}
+
+.alert-warning {
+    background-color: #fff3cd; /* Color de fondo amarillo claro */
+    color: #856404; /* Color de texto amarillo oscuro */
+}
+
+.alert-dismissible .btn-close {
+    margin-left: 1rem; /* Espaciado a la izquierda del botón de cerrar */
+}

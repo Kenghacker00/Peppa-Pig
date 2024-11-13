@@ -7,7 +7,16 @@ class MovieController:
         self.movie_model = Movie(db_path)
 
     def search_movies(self, query):
-        return search_movies_api(query)  # Llama a la función de búsqueda de la API
+        # Llama a la función de búsqueda de la API
+        results = search_movies_api(query)
+
+        # Filtrar resultados para incluir solo películas
+        if 'Search' in results:
+        # Filtrar solo los resultados que son películas
+            filtered_results = [movie for movie in results['Search'] if movie['Type'] == 'movie']
+        results['Search'] = filtered_results
+
+        return results
 
     def get_movie_details(self, movie_id):
         movie_details = get_movie_details(movie_id)  # Llamada a la API
