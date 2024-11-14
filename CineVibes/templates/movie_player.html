@@ -7,62 +7,22 @@
     <div class="row">
         <div class="col-12 col-lg-8 mb-4">
             <div class="movie-player glass-effect p-4 rounded shadow">
-                <h2 class="movie-title mb-3" style="color: #ff4081;">{{ movie.title | default('Película Desconocida') }} ({{ movie.year | default('N/A') }})</h2>
-                {% if movie.imdb_id == 'tt1431045' %}
-                <!-- Reproductor para Deadpool (2016) -->
-                <div class="embed-responsive embed-responsive-16by9" style="height: 500px;">
+                <h2 class="movie-title-player mb-3" style="color: #ff4081;">{{ movie.title | default('Película Desconocida') }} ({{ movie.year | default('N/A') }})</h2>
+
+                {% set video_links = {
+                    'tt1431045': 'https://luluvdo.com/e/2f87p50mtkny', 'title': 'Deadpool',
+                    'tt5463162': 'https://luluvdo.com/e/agnn5bpj7v8b', 'title': 'Deadpool 2',
+                    'tt6263850': 'https://luluvdo.com/e/rmnybmum5g8z', 'title': 'Deadpool And Wolverine',
+                    'tt10872600': 'https://luluvdo.com/e/c1rnxtji4vr7','title': 'Spider-Man: No Way Home',
+                    'tt0433035': 'https://luluvdo.com/e/w1iv5x90qirf', 'title': 'Gigantes de acero',
+                    'tt2263944': 'https://luluvdo.com/e/bc7br1ru432a', 'title': 'Dragon Ball Z: Battle Of Gods',
+                    'tt7961060': 'https://luluvdo.com/e/24emef6fmqyh', 'title': 'Dragon Ball Super: Broly'
+                } %}
+
+                {% if video_links[movie.imdb_id] %}
+                <div class="embed-responsive embed-responsive-16by9" style="height: 500px;"> <!-- Ajusta la altura aquí -->
                     <iframe class="embed-responsive-item"
-                        src="https://luluvdo.com/e/2f87p50mtkny"
-                        sandbox="allow-same-origin allow-scripts allow-forms"
-                        allowfullscreen
-                        referrerpolicy="no-referrer">
-                    </iframe>
-                </div>
-                {% elif movie.imdb_id == 'tt6263850' %}
-                <!-- Reproductor para Deadpool and Wolverine (2024) -->
-                <div class="embed-responsive embed-responsive-16by9" style="height: 500px;">
-                    <iframe class="embed-responsive-item"
-                        src="https://luluvdo.com/e/rmnybmum5g8z"
-                        sandbox="allow-same-origin allow-scripts allow-forms"
-                        allowfullscreen
-                        referrerpolicy="no-referrer">
-                    </iframe>
-                </div>
-                {% elif movie.imdb_id == 'tt10872600' %}
-                <!-- Reproductor para Spider-Man: No Way Home (2021) -->
-                <div class="embed-responsive embed-responsive-16by9" style="height: 500px;">
-                    <iframe class="embed-responsive-item"
-                        src="https://luluvdo.com/e/c1rnxtji4vr7"
-                        sandbox="allow-same-origin allow-scripts allow-forms"
-                        allowfullscreen
-                        referrerpolicy="no-referrer">
-                    </iframe>
-                </div>
-                {% elif movie.imdb_id == 'tt0433035' %}
-                <!-- Reproductor para Gigantes de acero (2011) -->
-                <div class="embed-responsive embed-responsive-16by9" style="height: 500px;">
-                    <iframe class="embed-responsive-item"
-                        src="https://luluvdo.com/e/w1iv5x90qirf"
-                        sandbox="allow-same-origin allow-scripts allow-forms"
-                        allowfullscreen
-                        referrerpolicy="no-referrer">
-                    </iframe>
-                </div>
-                {% elif movie.imdb_id == 'tt2263944' %}
-                <!-- Dragon ball Z: Battle Of Gods (2013) -->
-                <div class="embed-responsive embed-responsive-16by9" style="height: 500px;">
-                    <iframe class="embed-responsive-item"
-                        src="https://luluvdo.com/e/bc7br1ru432a"
-                        sandbox="allow-same-origin allow-scripts allow-forms"
-                        allowfullscreen
-                        referrerpolicy="no-referrer">
-                    </iframe>
-                </div>
-                {% elif movie.imdb_id == 'tt7961060' %}
-                <!-- Dragon ball Super: Broly (2018) -->
-                <div class="embed-responsive embed-responsive-16by9" style="height: 500px;">
-                    <iframe class="embed-responsive-item"
-                        src="https://luluvdo.com/e/bbci2kt4ba6s"
+                        src="{{ video_links[movie.imdb_id] }}"
                         sandbox="allow-same-origin allow-scripts allow-forms"
                         allowfullscreen
                         referrerpolicy="no-referrer">
@@ -85,7 +45,7 @@
                 <p style="color: #ff4081;"><i class="fas fa-language"></i> <strong>Idioma:</strong> {{ movie.language | default('N/A') }}</p>
                 <p style="color: #ff4081;"><i class="fas fa-globe"></i> <strong>País:</strong> {{ movie.country | default('N/A') }}</p>
                 <p style="color: #ff4081;"><i class="fas fa-trophy"></i> <strong>Premios:</strong> {{ movie.awards | default('N/A') }}</p>
-                <h4 class=" mt-4 mb-2" style="color: #ff4081;">Sinopsis</h4>
+                <h4 class="mt-4 mb-2" style="color: #ff4081;">Sinopsis</h4>
                 <p style="color: #ffffff;">{{ movie.plot | default('N/A') }}</p>
                 <h4 class="mt-4 mb-2" style="color: #ff4081;">Actores</h4>
                 <p style="color: #ffffff;">{{ movie.actors | default('N/A') }}</p>
@@ -129,48 +89,6 @@
             {% endfor %}
         </div>
     </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Bloquear ventanas emergentes
-            window.open = function() {
-                console.log("Se intentó abrir una ventana emergente, pero se bloqueó.");
-                return null; // Bloquea la apertura de nuevas ventanas
-            };
-
-            // Detectar y bloquear anuncios
-            const iframes = document.querySelectorAll('iframe');
-            iframes.forEach(iframe => {
-                iframe.addEventListener('load', function() {
-                    try {
-                        const iframeWindow = iframe.contentWindow;
-                        // Bloquear cualquier intento de abrir una nueva ventana desde el iframe
-                        iframeWindow.open = function() {
-                            console.log("Se intentó abrir una ventana emergente desde el iframe, pero se bloqueó.");
-                            return null; // Bloquea la apertura de nuevas ventanas
-                        };
-                    } catch (e) {
-                        console.error("No se pudo acceder al contenido del iframe:", e);
-                    }
-                });
-            });
-
-            // Mensaje para el usuario sobre el bloqueador de anuncios
-            setupAdBlockDetection();
-        });
-
-        function setupAdBlockDetection() {
-            // Aquí puedes implementar la lógica para detectar bloqueadores de anuncios
-            // Por ejemplo, puedes verificar si un elemento específico está presente en la página
-            const adBlockDetected = false; // Cambia esto según tu lógica de detección
-
-            if (adBlockDetected) {
-                document.querySelector('.ad-blocker-notice').style.display = 'block';
-            } else {
-                document.querySelector('.ad-blocker-notice').style.display = 'none';
-            }
-        }
-    </script>
 
     <div class="ad-blocker-notice alert alert-info mt-4">
         <i class="fas fa-shield-alt"></i> Para una mejor experiencia, recomendamos usar un bloqueador de anuncios en tu navegador.

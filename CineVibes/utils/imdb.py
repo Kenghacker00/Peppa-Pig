@@ -4,7 +4,7 @@ from config import Config
 OMDB_API_URL = "http://www.omdbapi.com/"
 
 def search_movies(query):
-    url = f"http://www.omdbapi.com/?apikey={Config.OMDB_API_KEY}&s={query}&language=es"
+    url = f"{OMDB_API_URL}?apikey={Config.OMDB_API_KEY}&s={query}&language=es"
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()

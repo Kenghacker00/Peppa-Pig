@@ -7,14 +7,17 @@
     <h2 class="text-light text-center mb-4">Verificar Cuenta</h2>
     <form method="POST" class="text-center">
         <div class="form-group mb-4">
+            <!-- Campo para ingresar el código de verificación -->
             <input type="text" name="code" class="form-control form-control-lg bg-transparent text-light" placeholder="Ingrese el código de verificación" required>
             <div class="invalid-feedback text-warning">
                 Por favor, ingrese el código de verificación.
             </div>
         </div>
+        <!-- Botón para enviar el código de verificación -->
         <button type="submit" class="btn btn-primary btn-lg">Verificar</button>
     </form>
     <div class="mt-4">
+        <!-- Enlace para reenviar el código de verificación -->
         <p class="text-light">¿No recibiste el código? <a href="{{ url_for('resend_verification_code', email=email) }}" class="text-primary">Reenviar código</a></p>
     </div>
 </div>
@@ -23,38 +26,38 @@
 {% block extra_css %}
 <style>
 :root {
-    --input-bg: rgba(255, 255, 255, 0.1);
-    --input-border: rgba(255, 255, 255, 0.2);
+    --input-bg: rgba(255, 255, 255, 0.1); /* Fondo del input */
+    --input-border: rgba(255, 255, 255, 0.2); /* Color del borde del input */
 }
 
 .form-control {
-    background-color: var(--input-bg);
-    border: 1px solid var(--input-border);
-    color: #f8f9fa;
+    background-color: var(--input-bg); /* Aplicar fondo al input */
+    border: 1px solid var(--input-border); /* Aplicar borde al input */
+    color: #f8f9fa; /* Color del texto en el input */
 }
 
 .form-control::placeholder {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.7); /* Color del placeholder */
 }
 
 .form-control:focus {
-    background-color: var(--input-bg);
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    background-color: var(--input-bg); /* Fondo al enfocar el input */
+    border-color: #007bff; /* Color del borde al enfocar */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra al enfocar */
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border: none;
-    transition: background-color 0.3s ease;
+    background-color: #007bff; /* Color de fondo del botón */
+    border: none; /* Sin borde */
+    transition: background-color 0.3s ease; /* Transición suave para el hover */
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Color de fondo al pasar el mouse */
 }
 
 .text-light {
-    color: #f8f9fa;
+    color: #f8f9fa; /* Color del texto claro */
 }
 </style>
 {% endblock %}

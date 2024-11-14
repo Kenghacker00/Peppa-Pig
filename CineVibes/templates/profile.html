@@ -86,139 +86,139 @@
 {% block extra_css %}
 <style>
 :root {
-    --card-bg: rgba(255, 255, 255, 0.1);
-    --card-border: rgba(255, 255, 255, 0.2);
+    --card-bg: rgba(255, 255, 255, 0.1); /* Fondo de la tarjeta */
+    --card-border: rgba(255, 255, 255, 0.2); /* Borde de la tarjeta */
 }
 
 .glass-effect {
     background: var(--card-bg);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px); /* Efecto de desenfoque de fondo */
     border: 1px solid var(--card-border);
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 30px;
+    border-radius: 15px; /* Bordes redondeados */
+    padding: 25px; /* Espaciado interno */
+    margin-bottom: 30px; /* Espaciado inferior */
 }
 
 .profile-card {
-    text-align: center;
+    text-align: center; /* Centrar texto en la tarjeta de perfil */
 }
 
 .profile-image {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 3px solid var(--card-border);
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    margin-bottom: 20px;
-    transition: transform 0.3s ease;
+    width: 150px; /* Ancho de la imagen de perfil */
+    height: 150px; /* Alto de la imagen de perfil */
+    object-fit: cover; /* Ajustar la imagen al contenedor */
+    border-radius: 50%; /* Bordes redondeados para la imagen de perfil */
+    border: 3px solid var(--card-border); /* Borde de la imagen */
+    box-shadow: 0 0 20px rgba(0,0,0,0.2); /* Sombra para la imagen */
+    margin-bottom: 20px; /* Espaciado inferior */
+    transition: transform 0.3s ease; /* Transición suave para el efecto hover */
 }
 
 .profile-image:hover {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
 }
 
-.profile -name {
-    color: var(--light-text);
-    font-size: 1.8rem;
-    margin-bottom: 10px;
+.profile-name {
+    color: var(--light-text); /* Color del nombre de usuario */
+    font-size: 1.8rem; /* Tamaño de fuente del nombre */
+    margin-bottom: 10px; /* Espaciado inferior */
 }
 
 .profile-email {
-    color: var(--light-text);
-    opacity: 0.8;
-    margin-bottom: 20px;
+    color: var(--light-text); /* Color del correo electrónico */
+    opacity: 0.8; /* Opacidad del correo electrónico */
+    margin-bottom: 20px; /* Espaciado inferior */
 }
 
 .status-badge {
-    display: inline-block;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    margin: 10px 0;
+    display: inline-block; /* Mostrar como bloque en línea */
+    padding: 5px 15px; /* Espaciado interno */
+    border-radius: 20px; /* Bordes redondeados para la insignia de estado */
+    font-size: 0.9rem; /* Tamaño de fuente de la insignia */
+    margin: 10px 0; /* Espaciado vertical */
 }
 
 .status-badge.verified {
-    background: rgba(40, 167, 69, 0.2);
-    color: #28a745;
+    background: rgba(40, 167, 69, 0.2); /* Fondo para verificado */
+    color: #28a745; /* Color del texto para verificado */
 }
 
 .status-badge.unverified {
-    background: rgba(220, 53, 69, 0.2);
-    color: #dc3545;
+    background: rgba(220, 53, 69, 0.2); /* Fondo para no verificado */
+    color: #dc3545; /* Color del texto para no verificado */
 }
 
 .btn-upload {
-    border: 2px solid var(--light-text);
-    transition: all 0.3s ease;
+    border: 2px solid var(--light-text); /* Borde del botón de carga */
+    transition: all 0.3s ease; /* Transición suave para el botón */
 }
 
 .btn-upload:hover {
-    background: var(--light-text);
-    color: var(--primary-color);
+    background: var(--light-text); /* Fondo al pasar el ratón */
+    color: var(--primary-color); /* Color del texto al pasar el ratón */
 }
 
 .section-title {
-    color: var(--light-text);
-    margin-bottom: 25px;
-    border-bottom: 2px solid var(--card-border);
-    padding-bottom: 10px;
+    color: var(--light-text); /* Color del título de la sección */
+    margin-bottom: 25px; /* Espaciado inferior */
+    border-bottom: 2px solid var(--card-border); /* Borde inferior */
+    padding-bottom: 10px; /* Espaciado inferior */
 }
 
 .review-card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease;
+    background: rgba(255, 255, 255, 0.05); /* Fondo de la tarjeta de reseña */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px; /* Espaciado interno */
+    margin-bottom: 20px; /* Espaciado inferior */
+    transition: transform 0.3s ease; /* Transición suave para el efecto hover */
 }
 
 .review-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px); /* Efecto de elevación al pasar el ratón */
 }
 
 .review-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
+    display: flex; /* Usar flexbox para el encabezado de la reseña */
+    justify-content: space-between; /* Espaciado entre elementos */
+    align-items: center; /* Alinear elementos verticalmente */
+    margin-bottom: 15px; /* Espaciado inferior */
 }
 
 .rating {
-    color: #ffd700;
+    color: #ffd700; /* Color de las estrellas de calificación */
 }
 
 .review-text {
-    color: var(--light-text);
-    opacity: 0.9;
-    line-height: 1.6;
+    color: var(--light-text); /* Color del texto de la reseña */
+    opacity: 0.9; /* Opacidad del texto de la reseña */
+    line-height: 1.6; /* Altura de línea para el texto */
 }
 
 .review-footer {
-    margin-top: 15px;
-    color: var(--light-text);
-    opacity: 0.7;
+    margin-top: 15px; /* Espaciado superior */
+    color: var(--light-text); /* Color del pie de la reseña */
+    opacity: 0.7; /* Opacidad del pie de la reseña */
 }
 
 .no-reviews {
-    text-align: center;
-    padding: 40px 0;
-    color: var(--light-text);
-    opacity: 0.7;
+    text-align: center; /* Centrar texto en la sección sin reseñas */
+    padding: 40px 0; /* Espaciado vertical */
+    color: var(--light-text); /* Color del texto */
+    opacity: 0.7; /* Opacidad del texto */
 }
 
 .no-reviews i {
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Espaciado inferior para el ícono */
 }
 
 /* Animaciones */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(20px); } /* Animación de entrada */
+ to { opacity: 1; transform: translateY(0); } /* Final de la animación */
 }
 
 .animate__fadeIn {
-    animation: fadeIn 0.5s ease-out;
+    animation: fadeIn 0.5s ease-out; /* Aplicar animación de entrada */
 }
 </style>
 {% endblock %}
@@ -227,18 +227,18 @@
 <script>
 document.getElementById('profile_pic').onchange = function() {
     if (this.files && this.files[0]) {
-        const reader = new FileReader ();
+        const reader = new FileReader();
         reader.onload = function(e) {
-            document.querySelector('.profile-image').src = e.target.result;
+            document.querySelector('.profile-image').src = e.target.result; /* Actualizar imagen de perfil */
         };
-        reader.readAsDataURL(this.files[0]);
+        reader.readAsDataURL(this.files[0]); /* Leer archivo como URL de datos */
 
         // Mostrar indicador de carga
-        document.querySelector('.profile-image').style.opacity = '0.5';
-        document.querySelector('.profile-card').insertAdjacentHTML('beforeend', '<div id="loading">Subiendo...</div>');
+        document.querySelector('.profile-image').style.opacity = '0.5'; /* Reducir opacidad de la imagen */
+        document.querySelector('.profile-card').insertAdjacentHTML('beforeend', '<div id="loading">Subiendo...</div>'); /* Mostrar mensaje de carga */
 
         // Enviar el formulario
-        this.form.submit();
+        this.form.submit(); /* Enviar formulario al cambiar la imagen */
     }
 };
 </script>

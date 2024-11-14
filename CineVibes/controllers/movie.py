@@ -5,6 +5,7 @@ import sqlite3
 class MovieController:
     def __init__(self, db_path):
         self.movie_model = Movie(db_path)
+        self.db_path = db_path
 
     def search_movies(self, query):
         # Llama a la función de búsqueda de la API
@@ -12,40 +13,60 @@ class MovieController:
 
         # Filtrar resultados para incluir solo películas
         if 'Search' in results:
-        # Filtrar solo los resultados que son películas
+            # Filtrar solo los resultados que son películas
             filtered_results = [movie for movie in results['Search'] if movie['Type'] == 'movie']
-        results['Search'] = filtered_results
+
+            # Verificar si las películas están disponibles en la base de datos
+            available_movies = self.get_available_movies()
+
+            # Marcar las películas disponibles
+            for movie in filtered_results:
+                movie['is_available'] = movie['imdbID'] in available_movies
+
+            results['Search'] = filtered_results
 
         return results
 
     def get_movie_details(self, movie_id):
-        movie_details = get_movie_details(movie_id)  # Llamada a la API
-        if 'errorMessage' in movie_details:
-            return None  # Manejo de errores si no se obtienen detalles
-
-        return {
-            'title': movie_details.get('Title', 'N/A'),
-            'year': movie_details.get('Year', 'N/A'),
-            'poster': movie_details.get('Poster', 'N/A'),
-            'imdb_rating': movie_details.get('imdbRating', 'N/A'),
-            'director': movie_details.get('Director', 'N/A'),
-            'runtime': movie_details.get('Runtime', 'N/A'),
-            'plot': movie_details.get('Plot', 'N/A'),
-            'imdb_id': movie_id,
-            'language': movie_details.get('Language', 'N/A'),
-            'country': movie_details.get('Country', 'N/A'),
-            'awards': movie_details.get('Awards', 'N/A'),
-            'actors': movie_details.get('Actors', 'N/A'),
-            'genre': movie_details.get('Genre', 'N/A')
-        }
+        movie_details = get_movie_details(movie_id)
+        if movie_details and 'errorMessage' not in movie_details:
+            return {
+                'imdb_id': movie_id,
+                'title': movie_details.get('Title', 'N/A'),
+                'year': movie_details.get('Year', 'N/A'),
+                'poster': movie_details.get('Poster', 'N/A'),
+                'director': movie_details.get('Director', 'N/A'),
+                'plot': movie_details.get('Plot', 'N/A'),
+                'imdb_rating': movie_details.get('imdbRating', 'N/A'),
+                'runtime': movie_details.get('Runtime', 'N/A'),
+                'language': movie_details.get('Language', 'N/A'),
+                'country': movie_details.get('Country', 'N/A'),
+                'awards': movie_details.get('Awards', 'N/A'),
+                'actors': movie_details.get('Actors', 'N/A'),
+                'genre': movie_details.get('Genre', 'N/A')
+            }
+        return None
 
     def get_all_movies(self):
         return self.movie_model.get_all_movies()
 
     def get_available_movies(self):
-        # Aquí deberías implementar la lógica para obtener los imdb_id de las películas disponibles
-        with sqlite3.connect(self.movie_model.db_path) as conn:
+        with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT imdb_id FROM movies WHERE available = 1')  # Asegúrate de que la columna 'available' exista
-            available_movies = [row[0] for row in cursor.fetchall()]
-        return available_movies
+            cursor.execute('SELECT imdb_id FROM movies WHERE available = 1')
+            available_movie_ids = [row[0] for row in cursor.fetchall()]
+
+        movies_details = []
+        for movie_id in available_movie_ids:
+            movie_details = get_movie_details(movie_id)
+            if movie_details and 'errorMessage' not in movie_details:
+                movies_details.append({
+                    'imdb_id': movie_id,
+                    'title': movie_details.get('Title', 'N/A'),
+                    'year': movie_details.get('Year', 'N/A'),
+                    'poster': movie_details.get('Poster', 'N/A'),
+                    'director': movie_details.get('Director', 'N/A'),
+                    'plot': movie_details.get('Plot', 'N/A')
+                })
+
+        return movies_details

@@ -5,10 +5,12 @@
 {% block content %}
 <div class="container-fluid animate__animated animate__fadeIn">
     <!-- Hero Section -->
-    <div class="hero-section text-center mb-5 p-5 hero-background"> <h1 class="display-4 mb-4 text-white">Bienvenido a CineVibes</h1>
+    <div class="hero-section text-center mb-5 p-5 hero-background">
+        <h1 class="display-4 mb-4 text-white">Bienvenido a CineVibes</h1>
         <p class="lead text-white">Tu destino para el mejor entretenimiento cinematográfico</p>
         <a href="{{ url_for('search') }}" class="btn btn-lg">Buscar Películas</a>
     </div>
+
     <!-- Featured Movies Section -->
     <section class="featured-movies mb-5">
         <h2 class="section-title text-center mb-4 text-white"><i class="fas fa-star"></i> Películas Destacadas</h2>
@@ -71,13 +73,13 @@
                 </div>
             </div>
 
-            <!-- Spider-Man: No Way Home -->
+           <!-- Spider-Man: No Way Home -->
             <div class="col-md-6 mb-4">
                 <div class="movie-card glass-effect animate__animated animate__fadeIn">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <img src="https://pics.filmaffinity.com/Spider_Man_No_Way_Home-387287198-large.jpg" alt="Spider-Man: No Way Home Poster"
-                                 class="movie-poster">
+                            <img src="https://pics.filmaffinity.com/Spider_Man_No_Way_Home-387287198-large.jpg"
+                                alt="Spider-Man: No Way Home Poster" class="movie-poster">
                         </div>
                         <div class="col-md-8">
                             <div class="movie-info p-4 bg-dark text-white rounded">
@@ -89,8 +91,7 @@
                                 <div class="movie-description">
                                     Peter Parker es desenmascarado y por tanto no es capaz de separar su vida normal de los enormes riesgos que conlleva ser un súper héroe. Cuando pide ayuda a Doctor Strange, los riesgos pasan a ser aún más peligrosos, obligándole a descubrir lo que realmente significa ser Spider-Man.
                                 </div>
-                                <a href="{{ url_for('movie_player', movie_id='tt10872600') }}"
-                                   class="btn btn-danger btn-watch mt-2">
+                                <a href="{{ url_for('movie_player', movie_id='tt10872600') }}" class="btn btn-danger btn-watch mt-2">
                                     <i class="fas fa-play"></i> Ver Película
                                 </a>
                             </div>
@@ -126,6 +127,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Dragon ball Z: Battle Of Gods -->
             <div class="col-md-6 mb-4">
                 <div class="movie-card glass-effect animate__animated animate__fadeIn">
@@ -153,33 +155,34 @@
                     </div>
                 </div>
             </div>
-                 <!-- Dragon ball Super: Broly -->
-                 <div class="col-md-6 mb-4">
-                    <div class="movie-card glass-effect animate__animated animate__fadeIn">
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT_j5CRCUL35x397JGveh5AtwBch-IZ_SwI2EupbT5ZTYRitV1M5oMt5GI998h77I3s9DSH"
-                                     class="movie-poster">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="movie-info p-4 bg-dark text-white rounded">
-                                    <h3 class="movie-title" style="color: #ff4081;">Dragon Ball Super: Broly</h3>
-                                    <div class="movie-meta">
-                                        <span><i class="fas fa-calendar"></i> 2018</span>
-                                        <span><i class="fas fa-film"></i> Tatsuya Nagamine</span>
-                                    </div>
-                                    <div class="movie-description">
-                                        Un orgulloso príncipe saiyan que comparte una intensa rivalidad con Goku. Al que fuera una vez un guerrero cruel y malvado se le ablanda el corazón tras luchar con Goku. Se entrena para vencer a Goku, pero se siente amenazado por Freeza tras ser resucitado después del Torneo de Poder.
-                                    </div>
-                                    <a href="{{ url_for('movie_player', movie_id='tt7961060') }}"
-                                       class="btn btn-danger btn-watch mt-2">
-                                        <i class="fas fa-play"></i> Ver Película
-                                    </a>
+
+            <!-- Dragon Ball Super: Broly -->
+            <div class="col-md-6 mb-4">
+                <div class="movie-card glass-effect animate__animated animate__fadeIn">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT_j5CRCUL35x397JGveh5AtwBch-IZ_SwI2EupbT5ZTYRitV1M5oMt5GI998h77I3s9DSH"
+                                 class="movie-poster">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="movie-info p-4 bg-dark text-white rounded">
+                                <h3 class="movie-title" style="color: #ff4081;">Dragon Ball Super: Broly</h3>
+                                <div class="movie-meta">
+                                    <span><i class="fas fa-calendar"></i> 2018</span>
+                                    <span><i class="fas fa-film"></i> Tatsuya Nagamine</span>
                                 </div>
+                                <div class="movie-description">
+                                    Un orgulloso príncipe saiyan que comparte una intensa rivalidad con Goku. Al que fuera una vez un guerrero cruel y malvado se le ablanda el corazón tras luchar con Goku. Se entrena para vencer a Goku, pero se siente amenazado por Freeza tras ser resucitado después del Torneo de Poder.
+                                </div>
+                                <a href="{{ url_for('movie_player', movie_id='tt7961060') }}"
+                                   class="btn btn-danger btn-watch mt-2">
+                                    <i class="fas fa-play"></i> Ver Película
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </section>
 

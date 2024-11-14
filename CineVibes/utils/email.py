@@ -19,8 +19,8 @@ def send_verification_email(to_email, verification_code):
 def send_movie_request_email(to_email, movie_title, user_email, additional_info=None):
     subject = f"Solicitud de película: {movie_title}"
     body = f"""Se ha recibido una solicitud para la película '{movie_title}'
-    Del usuario: {user_email}
-    Información adicional: {additional_info or 'No proporcionada'}"""
+Del usuario: {user_email}
+Información adicional: {additional_info or 'No proporcionada'}"""
 
     msg = MIMEText(body)
     msg['Subject'] = subject

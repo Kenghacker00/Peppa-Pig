@@ -91,18 +91,18 @@
 
                     <!-- Mensajes de Estado -->
                     {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        <div class="container mt-4">
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                    <i class="fas fa-info-circle me-2"></i>
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-{% endwith %}
+                        {% if messages %}
+                            <div class="container mt-4">
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        {{ message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
                 </div>
             </div>
         </div>
@@ -113,51 +113,51 @@
 {% block extra_css %}
 <style>
 :root {
-    --card-bg: rgba(255, 255,  255, 0.1);
-    --card-border: rgba(255, 255, 255, 0.2);
+    --card-bg: rgba(255, 255,  255, 0.1); /* Fondo de la tarjeta */
+ --card-border: rgba(255, 255, 255, 0.2); /* Borde de la tarjeta */
 }
 
 .glass-effect {
     background: var(--card-bg);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px); /* Efecto de desenfoque de fondo */
     border: 1px solid var(--card-border);
-    border-radius: 15px;
-    padding: 25px;
+    border-radius: 15px; /* Bordes redondeados */
+    padding: 25px; /* Espaciado interno */
 }
 
 .card-header {
     background: var(--card-bg);
-    border-bottom: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border); /* Borde inferior de la cabecera */
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border: none;
-    transition: background-color 0.3s ease;
+    background-color: #007bff; /* Color de fondo del botón */
+    border: none; /* Sin borde */
+    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Color de fondo al pasar el ratón */
 }
 
 .form-label {
-    font-weight: bold;
+    font-weight: bold; /* Negrita para las etiquetas de los formularios */
 }
 
 .text-light {
-    color: #f8f9fa;
+    color: #f8f9fa; /* Color claro para el texto */
 }
 
 .text-light:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* Subrayado al pasar el ratón */
 }
 
 .hover-effect {
-    transition: transform 0.2s;
+    transition: transform 0.2s; /* Transición suave para el efecto de hover */
 }
 
 .hover-effect:hover {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Escala al pasar el ratón */
 }
 
 .invalid-feedback {

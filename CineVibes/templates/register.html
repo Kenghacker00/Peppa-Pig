@@ -11,20 +11,24 @@
                     <h2>Registro de Usuario</h2>
                 </div>
                 <div class="card-body">
-                    <div id="message"></div>
+                    <div id="message"></div> <!-- Mensajes de estado para el registro -->
                     <form id="register-form" method="POST">
+                        <!-- Campo para el apodo -->
                         <div class="mb-3">
                             <label for="nickname" class="form-label">Apodo:</label>
                             <input type="text" class="form-control" id="nickname" name="nickname" required placeholder="Ingresa tu apodo">
                         </div>
+                        <!-- Campo para el correo electrónico -->
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo Electrónico:</label>
                             <input type="email" class="form-control" id="email" name="email" required placeholder="Ingresa tu correo electrónico">
                         </div>
+                        <!-- Campo para la contraseña -->
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña:</label>
                             <input type="password" class="form-control" id="password" name="password" required placeholder="Crea una contraseña">
                         </div>
+                        <!-- Botón para registrar -->
                         <button type="submit" class="btn btn-primary btn-block">Registrar</button>
                     </form>
                 </div>
@@ -40,43 +44,43 @@
 {% block extra_css %}
 <style>
 :root {
-    --card-bg: rgba(255, 255, 255, 0.1);
-    --card-border: rgba(255, 255, 255, 0.2);
+    --card-bg: rgba(255, 255, 255, 0.1); /* Fondo de la tarjeta */
+    --card-border: rgba(255, 255, 255, 0.2); /* Borde de la tarjeta */
 }
 
 .glass-effect {
     background: var(--card-bg);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px); /* Efecto de desenfoque de fondo */
     border: 1px solid var(--card-border);
-    border-radius: 15px;
-    padding: 25px;
+    border-radius: 15px; /* Bordes redondeados */
+    padding: 25px; /* Espaciado interno */
 }
 
 .card-header {
     background: var(--card-bg);
-    border-bottom: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border); /* Borde inferior de la cabecera */
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border: none;
-    transition: background-color 0.3s ease;
+    background-color: #007bff; /* Color de fondo del botón */
+    border: none; /* Sin borde */
+    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Color de fondo al pasar el ratón */
 }
 
 .form-label {
-    font-weight: bold;
+    font-weight: bold; /* Negrita para las etiquetas de los formularios */
 }
 
 .text-light {
-    color: #f8f9fa;
+    color: #f8f9fa; /* Color claro para el texto */
 }
 
 .text-light:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* Subrayado al pasar el ratón */
 }
 </style>
 {% endblock %}
